@@ -19,6 +19,11 @@ class App extends Component {
     return (
       <View>
         <Text>abc</Text>
+        <Text>abc</Text>
+        <Text>abc</Text>
+        <Text>abc</Text>
+        <Text>abc</Text>
+        <Text>abc</Text>
       </View>
     );
   }
