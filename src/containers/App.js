@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import firebase from 'react-native-firebase'
+import MyCard from './MyCard';
 
 
 class App extends Component {
@@ -18,12 +19,7 @@ class App extends Component {
   render() {
     return (
       <View>
-        <Text>abc</Text>
-        <Text>abc</Text>
-        <Text>abc</Text>
-        <Text>abc</Text>
-        <Text>abc</Text>
-        <Text>abc</Text>
+        <MyCard />
       </View>
     );
   }
