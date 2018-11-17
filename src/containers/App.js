@@ -6,6 +6,7 @@ import {
 
 import firebase from 'react-native-firebase'
 import MyCard from './MyCard';
+import LoginScreen from './LoginScreen';
 
 
 class App extends Component {
@@ -18,8 +19,8 @@ class App extends Component {
 
   render() {
     return (
-      <View>
-        <MyCard />
+      <View style={{ flex: 1 }}>
+        <LoginScreen />
       </View>
     );
   }
