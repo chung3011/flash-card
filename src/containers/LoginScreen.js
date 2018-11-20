@@ -7,7 +7,7 @@ import {
     TextInput,
 } from 'react-native';
 import firebase from 'react-native-firebase'
-import { primaryColorYellow } from '../style';
+import { primaryColorCore } from '../style';
 class LoginScreen extends Component {
     state = {
         email: '',
@@ -34,7 +34,10 @@ class LoginScreen extends Component {
                     />
                     <Text style={styles.txtInput}>Email</Text>
                 </View>
-                <TextInput onChangeText={(email) => this.setState({ email })} />
+                <TextInput
+                    style={{ borderBottomWidth: 1, borderColor: 'brown' }}
+                    onChangeText={(email) => this.setState({ email })}
+                />
             </View>
             <View style={{ marginTop: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
@@ -46,6 +49,7 @@ class LoginScreen extends Component {
                     <Text style={styles.txtInput}>Password</Text>
                 </View>
                 <TextInput
+                    style={{ borderBottomWidth: 1, borderColor: 'brown' }}
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({ password })}
                 />
@@ -109,7 +113,7 @@ class LoginScreen extends Component {
         <View style={{ flexDirection: 'row' }}>
             <View style={styles.buttonStyle}>
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: primaryColorYellow }]}
+                    style={[styles.button, { backgroundColor: primaryColorCore }]}
                     onPress={this.onSignUp}
                     loading={this.state.isSigningUp}
                     loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
         fontFamily: 'sans-serif',
         fontSize: 40,
         fontWeight: 'bold',
-        color: '#e6b800'
+        color: primaryColorCore
     },
     loginStyleView: {
         backgroundColor: 'white',

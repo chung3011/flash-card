@@ -3,7 +3,8 @@ import {
   Text, StyleSheet, Dimensions,
   View, TouchableOpacity,
 } from 'react-native';
-import { primaryColorYellow } from '../style';
+import { primaryColorCore } from '../style';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Topic extends Component {
   state = {}
@@ -17,8 +18,14 @@ class Topic extends Component {
           <Text style={styles.topic}>{this.props.item.title}</Text>
         </TouchableOpacity>
         <View style={styles.bottom}>
-          <Text>10</Text>
-          <Text>40/50</Text>
+          <View style={styles.flexRow}>
+            <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
+            <Text>10</Text>
+          </View>
+          <View style={styles.flexRow}>
+            <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={17} />
+            <Text>40/50</Text>
+          </View>
         </View>
       </View>
     );
@@ -32,14 +39,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 10,
     borderWidth: 2,
-    borderColor: primaryColorYellow
+    borderColor: primaryColorCore
   },
   header: {
-    backgroundColor: primaryColorYellow,
+    backgroundColor: primaryColorCore,
     padding: 10
   },
   language: {
-    fontSize: 14
+    fontSize: 14,
+    color: '#f2f2f2'
   },
   topic: {
     fontSize: 20,
@@ -49,6 +57,9 @@ const styles = StyleSheet.create({
   bottom: {
     flexDirection: 'row',
     justifyContent: 'space-around'
+  },
+  flexRow: {
+    flexDirection: 'row',
   }
 })
 export default Topic;

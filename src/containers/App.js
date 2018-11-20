@@ -5,9 +5,15 @@ import {
 } from 'react-native';
 
 import firebase from 'react-native-firebase'
-import MyCard from './MyCard';
 import LoginScreen from './LoginScreen';
+import MyCardScreen from './MyCardScreen';
+import AddCardScreen from './AddCardScreen';
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
+import rootReducer from '../reducers'
+const store = createStore(rootReducer)
 
 class App extends Component {
   state = {}
@@ -19,9 +25,9 @@ class App extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <LoginScreen />
-      </View>
+      <Provider style={{ flex: 1 }} store={store}>
+        <MyCardScreen />
+      </Provider>
     );
   }
 }

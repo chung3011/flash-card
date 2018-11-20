@@ -39,7 +39,7 @@ const data = [
 
 ]
 
-class MyCard extends Component {
+class MyCardScreen extends Component {
     state = {}
 
     renderItem = (data) => {
@@ -61,4 +61,4 @@ class MyCard extends Component {
         );
     }
 }
-export default MyCard;
+export default MyCardScreen;
