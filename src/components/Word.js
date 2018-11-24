@@ -14,7 +14,7 @@ class Word extends Component {
                 <TextInput style={styles.text} placeholder={'Word'}/>
                 {this.props.side == 'right'
                     && <TouchableOpacity style={styles.icon}>
-                        <Icon name="plus-circle" size={35} color={primaryColorCore} />
+                        <Icon name="plus-circle" size={30} color={primaryColorCore} />
                     </TouchableOpacity>}
             </View>
         );
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     text: {
         borderWidth: 2,
         borderColor: primaryColorCore,
-        width: 110,
-        margin: 10,
+        width: 100,
+        margin: 15,
         borderRadius: 10
     },
     icon: {
