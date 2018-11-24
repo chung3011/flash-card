@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginVertical: 8
   },
   flexRow: {
     flexDirection: 'row',

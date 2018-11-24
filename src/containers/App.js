@@ -11,10 +11,10 @@ import { createStore } from 'redux'
 
 import LoginScreen from './LoginScreen';
 import SplashScreen from './SplashScreen'
+import FirstScreen from './FirstScreen'
 import HomeScreen from './HomeScreen'
 import MyCardScreen from './MyCardScreen';
 import AddCardScreen from './AddCardScreen';
-import Test from './test'
 import LearnScreen from './LearnScreen'
 import rootReducer from '../reducers'
 
@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <LearnScreen />
+        <MyCardScreen />
       </Provider>
     );
   }
