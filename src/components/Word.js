@@ -11,7 +11,7 @@ class Word extends Component {
     render() {
         return (
             <View style={[styles.container, { justifyContent: this.props.side == 'left' ? 'flex-end' : 'flex-start' }]}>
-                <TextInput style={styles.text} />
+                <TextInput style={styles.text} placeholder={'Word'}/>
                 {this.props.side == 'right'
                     && <TouchableOpacity style={styles.icon}>
                         <Icon name="plus-circle" size={35} color={primaryColorCore} />

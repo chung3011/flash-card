@@ -5,28 +5,28 @@ import {
 } from 'react-native';
 
 import firebase from 'react-native-firebase'
-import LoginScreen from './LoginScreen';
-import MyCardScreen from './MyCardScreen';
-import AddCardScreen from './AddCardScreen';
-
+import { createSwitchNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
+import LoginScreen from './LoginScreen';
+import SplashScreen from './SplashScreen'
+import HomeScreen from './HomeScreen'
+import MyCardScreen from './MyCardScreen';
+import AddCardScreen from './AddCardScreen';
+import Test from './test'
+import LearnScreen from './LearnScreen'
 import rootReducer from '../reducers'
+
 const store = createStore(rootReducer)
 
 class App extends Component {
   state = {}
 
-  componentDidMount() {
-    console.log(firebase)
-  }
-
-
   render() {
     return (
-      <Provider style={{ flex: 1 }} store={store}>
-        <MyCardScreen />
+      <Provider store={store}>
+        <LearnScreen />
       </Provider>
     );
   }

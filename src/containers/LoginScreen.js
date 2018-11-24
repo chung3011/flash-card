@@ -17,7 +17,7 @@ class LoginScreen extends Component {
     }
     renderLogo = () => (
         <View style={styles.logoStyleView}>
-            <Text style={styles.imgStyle}>FLAT CARD</Text>
+            <Text style={styles.imgStyle}>FLASH CARD</Text>
         </View>
 
     )
