@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <Provider style={{ flex: 1 }} store={store}>
-        <MyCardScreen />
+        <AddCardScreen />
       </Provider>
     );
   }

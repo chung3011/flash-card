@@ -55,7 +55,7 @@ class MyCardScreen extends Component {
                     style={{ flexGrow: 0 }}
                     data={data}
                     renderItem={this.renderItem}
-                    keyExtractor={item => item.toString()}
+                // keyExtractor={item => item.toString()}
                 />
             </View>
         );

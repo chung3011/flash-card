@@ -1,41 +1,20 @@
 import React, { Component } from 'react';
 import {
-    Text, TextInput, Dimensions,
-    View, StyleSheet, TouchableOpacity,
+  Text,
+  View,
 } from 'react-native';
-import { primaryColorCore } from '../style';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import WordOneSide from './WordOneSide';
 
 class Word extends Component {
-    state = {}
-    render() {
-        return (
-            <View style={[styles.container, { justifyContent: this.props.side == 'left' ? 'flex-end' : 'flex-start' }]}>
-                <TextInput style={styles.text} />
-                {this.props.side == 'right'
-                    && <TouchableOpacity style={styles.icon}>
-                        <Icon name="plus-circle" size={35} color={primaryColorCore} />
-                    </TouchableOpacity>}
-            </View>
-        );
-    }
+  state = {}
+  render() {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <WordOneSide side={'left'} text={this.props.item.word} />
+        <WordOneSide side={'right'} text={this.props.item.mean} />
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        width: Dimensions.get('window').width / 2,
-        alignItems: 'center'
-    },
-    text: {
-        borderWidth: 2,
-        borderColor: primaryColorCore,
-        width: 110,
-        margin: 10,
-        borderRadius: 10
-    },
-    icon: {
-        elevation: 2
-    }
-})
 export default Word;
