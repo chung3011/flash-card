@@ -57,7 +57,7 @@ class MyCardScreen extends Component {
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.63 }}
                     data={data}
                     renderItem={this.renderItem}
-                // keyExtractor={item => item.toString()}
+                    keyExtractor={item => item.toString()}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20 }}>
                     <TouchableOpacity>

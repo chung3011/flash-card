@@ -20,6 +20,7 @@ import AddCardScreen from './AddCardScreen';
 import LearnScreen from './LearnScreen'
 import DiscoveryScreen from './DiscoveryScreen';
 import OwnCardScreen from './OwnCardScreen';
+import OtherCard from './OtherCard'
 
 const store = createStore(rootReducer)
 

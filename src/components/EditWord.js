@@ -13,7 +13,7 @@ class EditWord extends Component {
     }
     render() {
         return (
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }} >
                 <View style={{justifyContent:'center',alignItems:'center',width:45}}>
                     <CheckBox
                         size={27}
@@ -27,6 +27,7 @@ class EditWord extends Component {
                     borderColor: primaryColorCore,
                     width: 100,
                     marginVertical: 15,
+                    marginLeft:15,
                     marginRight: 20,
                     borderRadius: 10,
                 }}>{this.props.item.word}</TextInput>
@@ -35,7 +36,7 @@ class EditWord extends Component {
                     borderColor: primaryColorCore,
                     width: 100,
                     marginVertical: 15,
-                    marginRight: 10,
+                    marginRight: 15,
                     borderRadius: 10,
                 }}>{this.props.item.mean}</TextInput>
                 <TouchableOpacity style={{ marginEnd: 10 }}>

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {
     Text, TextInput, StyleSheet,
-    View, TouchableOpacity, Dimensions,FlatList
+    View, TouchableOpacity, Dimensions, FlatList
 } from 'react-native';
 import { primaryColorCore, secondaryColorCore } from '../style';
 import EditWord from './../components/EditWord'
-import Word from './../components/Word'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const data = [
@@ -91,16 +90,36 @@ class OwnCardScreen extends Component {
         </View>
     )
 
-    renderList = (data) =>  {
-        return  <EditWord item={data.item} />        
+    renderList = (data) => {
+        return <EditWord item={data.item} />
     }
 
     renderWord = () => (
-        <View style={{}}>
-            <View style={{ flexDirection: 'row',}}>
-                <Word side={'left'} />
-                <Word side={'right'} />
-            </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' ,marginStart: 45}}>
+            <TextInput style={{
+                borderWidth: 2,
+                borderColor: primaryColorCore,
+                width: 100,
+                marginVertical: 15,
+                marginRight: 20,
+                borderRadius: 10,
+            }}
+                placeholder={'word'}
+            ></TextInput>
+            <TextInput style={{
+                borderWidth: 2,
+                borderColor: primaryColorCore,
+                width: 100,
+                marginVertical: 15,
+                marginRight: 15,
+                borderRadius: 10,
+            }}
+                placeholder={'mean'}
+            ></TextInput>
+            <TouchableOpacity style={{ marginEnd: 10 }}>
+                <Icon name="plus-circle" size={30} color={secondaryColorCore} />
+
+            </TouchableOpacity>
         </View>
     )
 
@@ -110,7 +129,7 @@ class OwnCardScreen extends Component {
             <Icon name="trash" size={30} color={'white'} />
         </TouchableOpacity>
     )
-        
+
     render() {
         return (
 
@@ -120,7 +139,7 @@ class OwnCardScreen extends Component {
                 {this.renderSearch()}
                 {this.renderDetail()}
                 <FlatList
-                    style={{ flexGrow: 0 , height: Dimensions.get("window").height * 0.36, width: Dimensions.get("window").width * 0.95}}
+                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.36, width: Dimensions.get("window").width * 0.95 }}
                     data={data}
                     renderItem={this.renderList}
                     keyExtractor={item => item.toString()}
