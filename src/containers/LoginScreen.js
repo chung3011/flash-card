@@ -4,10 +4,12 @@ import {
     View,
     StyleSheet,
     Image,
-    TextInput,
+    TextInput, Dimensions
 } from 'react-native';
 import firebase from 'react-native-firebase'
-import { primaryColorCore } from '../style';
+import { primaryColorCore, secondaryColorCore } from '../style';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 class LoginScreen extends Component {
     state = {
         email: '',
@@ -15,43 +17,38 @@ class LoginScreen extends Component {
         isSigningIn: false,
         isSigningUp: false
     }
+
     renderLogo = () => (
         <View style={styles.logoStyleView}>
-            <Text style={styles.imgStyle}>FLAT CARD</Text>
+            <Image
+                style={styles.imgStyle}
+                resizeMode='contain'
+                source={require('../../imgs/Logo.jpg')}
+            />
         </View>
-
     )
 
     renderLogin = () => (
         <View>
             <View>
                 <View style={{ flexDirection: 'row' }}>
-                    <Image
-                        style={styles.loginImg}
-                        //resizeMode='contain'
-                        source={require('../../imgs/ic_email.png')}
-                        keyboardType={'email-address'}
-                    />
+                    <Icon name="user" size={20} color={secondaryColorCore} style={{marginStart:10}}/>
                     <Text style={styles.txtInput}>Email</Text>
                 </View>
                 <TextInput
-                    style={{ borderBottomWidth: 1, borderColor: 'brown' }}
                     onChangeText={(email) => this.setState({ email })}
+                    underlineColorAndroid={primaryColorCore}
                 />
             </View>
             <View style={{ marginTop: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Image
-                        style={styles.loginImg}
-                        //resizeMode='contain'
-                        source={require('../../imgs/ic_password.png')}
-                    />
+                    <Icon name="unlock-alt" size={20} color={secondaryColorCore} style={{marginStart:10}}/>
                     <Text style={styles.txtInput}>Password</Text>
                 </View>
                 <TextInput
-                    style={{ borderBottomWidth: 1, borderColor: 'brown' }}
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({ password })}
+                    underlineColorAndroid={primaryColorCore}
                 />
             </View>
         </View>
@@ -116,17 +113,17 @@ class LoginScreen extends Component {
                     style={[styles.button, { backgroundColor: primaryColorCore }]}
                     onPress={this.onSignUp}
                     loading={this.state.isSigningUp}
-                    loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
+                    loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
                 >
                     <Text style={styles.textButton}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonStyle}>
                 <TouchableOpacity
-                    style={[styles.button, { backgroundColor: '#ff3300' }]}
+                    style={[styles.button, { backgroundColor: secondaryColorCore }]}
                     onPress={this.onSignIn}
                     loading={this.state.isSigningIn}
-                    loadingProps={{ size: 'large', color: 'rgba(111, 202, 186, 1)' }}
+                    loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
                 >
                     <Text style={styles.textButton}>Sign In</Text>
                 </TouchableOpacity>
@@ -134,7 +131,7 @@ class LoginScreen extends Component {
         </View>
     )
     renderError = () => (
-        <Text style={{ color: 'red' }}>{this.state.err}</Text>
+        <Text style={{ color: primaryColorCore }}>{this.state.err}</Text>
     )
     render() {
         return (
@@ -150,7 +147,6 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // flexDirection: 'column',
         paddingHorizontal: 20,
         justifyContent: 'center',
         backgroundColor: 'white',
@@ -158,16 +154,10 @@ const styles = StyleSheet.create({
     logoStyleView: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 80,
     },
     imgStyle: {
-        fontFamily: 'sans-serif',
-        fontSize: 40,
-        fontWeight: 'bold',
-        color: primaryColorCore
-    },
-    loginStyleView: {
-        backgroundColor: 'white',
+        height: Dimensions.get("window").width * 0.8,
+        width: Dimensions.get("window").width
     },
     loginImg: {
         height: 16,
@@ -175,7 +165,7 @@ const styles = StyleSheet.create({
         marginStart: 10
     },
     txtInput: {
-        color: '#663300',
+        color: secondaryColorCore,
         marginStart: 10
     },
     buttonStyle: {
@@ -187,7 +177,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 45,
         borderWidth: 0,
-        borderRadius: 16,
+        borderRadius: 12,
         marginTop: 60,
         alignItems: 'center',
         justifyContent: 'center',
@@ -195,7 +185,7 @@ const styles = StyleSheet.create({
     },
     textButton: {
         fontWeight: 'bold',
-        color: '#f1f1f1'
+        color: 'white'
     }
 });
 export default LoginScreen;

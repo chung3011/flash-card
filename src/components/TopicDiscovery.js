@@ -6,7 +6,7 @@ import {
 import { primaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-class Topic extends Component {
+class TopicDiscovery extends Component {
   state = {}
   render() {
     return (
@@ -15,22 +15,16 @@ class Topic extends Component {
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
             <TouchableOpacity>
-              <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="question-circle" size={27} color={'white'} />
+              <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="plus-circle" size={27} color={'white'} />
 
             </TouchableOpacity>
           </View>
           <Text style={styles.topic}>{this.props.item.title}</Text>
         </TouchableOpacity>
-        <View style={styles.bottom}>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
             <Text>10</Text>
           </View>
-          <View style={styles.flexRow}>
-            <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={17} />
-            <Text>40/50</Text>
-          </View>
-        </View>
       </View>
     );
   }
@@ -60,13 +54,10 @@ const styles = StyleSheet.create({
     margin: 10,
     color: '#262626'
   },
-  bottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 5
-  },
   flexRow: {
-    flexDirection: 'row',
+      flexDirection: 'row',
+      alignSelf: 'center',
+      marginVertical:5
   }
 })
-export default Topic;
+export default TopicDiscovery;

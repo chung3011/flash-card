@@ -3,6 +3,8 @@ import {
     Text, TextInput,
     View,
 } from 'react-native';
+import { primaryColorCore, secondaryColorCore } from '../style';
+
 
 class FindTitle extends Component {
     state = {}
@@ -11,10 +13,10 @@ class FindTitle extends Component {
             <View>
                 <TextInput
                     style={{
-                        margin: 10,
+                        margin: 15,
                         borderWidth: 1,
                         borderRadius: 20,
-                        borderColor: 'gray',
+                        borderColor: secondaryColorCore,
                         padding: 10
                     }}
                     placeholder={'Find title'}

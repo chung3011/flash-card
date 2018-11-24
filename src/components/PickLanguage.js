@@ -3,6 +3,8 @@ import {
     Text, Picker,
     View, Dimensions,
 } from 'react-native';
+import { primaryColorCore, secondaryColorCore } from '../style';
+
 
 class PickLanguage extends Component {
     state = {}
@@ -12,7 +14,8 @@ class PickLanguage extends Component {
                 marginHorizontal: 30,
                 marginBottom: 20,
                 borderWidth: 1,
-                borderColor: 'gray'
+                borderRadius: 5,
+                borderColor: secondaryColorCore
             }}>
                 <Picker
                     selectedValue={this.state.language}
