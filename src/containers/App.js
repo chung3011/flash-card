@@ -28,7 +28,8 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
+
+      <Provider style={{ flex: 1 }} store={store}>
         <OwnCardScreen />
       </Provider>
     );

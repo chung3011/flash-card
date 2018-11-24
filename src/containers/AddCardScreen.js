@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
-    Text, TextInput, StyleSheet,
+    Text, TextInput, StyleSheet, FlatList,
     View, TouchableOpacity,
 } from 'react-native';
 import PickLanguage from '../components/PickLanguage';
-import Word from '../components/Word';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { primaryColorCore, secondaryColorCore } from '../style';
 
+import Word from '../components/Word';
+import AddWord from '../components/AddWord';
 
 import { connect } from 'react-redux'
 
@@ -21,20 +22,23 @@ class AddCardScreen extends Component {
                 style={styles.title}
                 placeholder={'Add title'}
                 onChangeText={(text) => this.setState({ text })}
-                value={this.props.topic.title}
+                value={this.state.text}
                 underlineColorAndroid={'transparent'}
             />
         </View>
     )
 
-    renderWord = () => (
-        <View style={{}}>
-            <View style={{ flexDirection: 'row',}}>
-                <Word side={'left'} />
-                <Word side={'right'} />
-            </View>
-        </View>
-    )
+    renderItem = ({ item }) => {
+        console.log(item)
+    }
+
+
+    renderWord = () => <FlatList
+        style={{ flexGrow: 0 }}
+        data={this.props.topic}
+        renderItem={({ item }) => <Word item={item} />}
+        keyExtractor={item => item.word}
+    />
 
     renderAddButton = () => (
         <TouchableOpacity style={styles.addButton}>
@@ -44,11 +48,13 @@ class AddCardScreen extends Component {
     )
 
     render() {
+
         return (
             <View style={styles.container}>
                 {this.renderAddTitle()}
                 <PickLanguage />
                 {this.renderWord()}
+                <AddWord />
                 {this.renderAddButton()}
             </View>
         );
@@ -88,5 +94,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = (topic) => ({ topic })
+const mapStateToProps = ({ topic }) => ({ topic })
 export default connect(mapStateToProps)(AddCardScreen);
