@@ -8,6 +8,8 @@ import firebase from 'react-native-firebase'
 import { createSwitchNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import rootReducer from '../reducers'
+
 
 import LoginScreen from './LoginScreen';
 import SplashScreen from './SplashScreen'
@@ -16,7 +18,7 @@ import HomeScreen from './HomeScreen'
 import MyCardScreen from './MyCardScreen';
 import AddCardScreen from './AddCardScreen';
 import LearnScreen from './LearnScreen'
-import rootReducer from '../reducers'
+import DiscoveryScreen from './DiscoveryScreen';
 
 const store = createStore(rootReducer)
 
@@ -26,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <MyCardScreen />
+        <DiscoveryScreen />
       </Provider>
     );
   }
