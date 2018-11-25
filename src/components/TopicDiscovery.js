@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginVertical: 5
+    marginVertical: 3
   }
 })
 export default TopicDiscovery;

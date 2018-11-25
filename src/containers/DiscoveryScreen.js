@@ -57,14 +57,14 @@ class DiscoveryScreen extends Component {
                 <FindTitle />
                 <PickLanguage />
                 <FlatList
-                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.63 }}
+                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.60 }}
                     data={data}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />
                 <View style={{ marginVertical: 20, alignItems: 'center' }}>
-                    <TouchableOpacity>
-                        <Icon name="user-circle" size={50} color={secondaryColorCore} />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Topics')}>
+                        <Icon name="user-circle" size={40} color={secondaryColorCore} />
                     </TouchableOpacity>
 
                 </View>

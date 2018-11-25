@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Text, TextInput, StyleSheet, FlatList,
-    View, TouchableOpacity,
+    View, TouchableOpacity, Dimensions
 } from 'react-native';
 import PickLanguage from '../components/PickLanguage';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -89,12 +89,19 @@ class AddCardScreen extends Component {
 
         return (
             <View style={styles.container}>
-                {this.renderAddTitle()}
-                <PickLanguage onSelectLanguage={this.handleLanguage} />
-                {this.renderWord()}
-                <AddWord />
-                {this.renderAddButton()}
-            </View>
+                <View style={{ height: Dimensions.get("window").height * 0.2 }}>
+                    {this.renderAddTitle()}
+                    <PickLanguage onSelectLanguage={this.handleLanguage} />
+                </View>
+
+                <View style={{ height: Dimensions.get("window").height * 0.55 }}>
+                    {this.renderWord()}
+                    <AddWord />
+                </View>
+                <View style={{ height: Dimensions.get("window").height * 0.1 }}>
+                    {this.renderAddButton()}
+                </View>
+            </View >
         );
     }
 }
@@ -116,7 +123,6 @@ const styles = StyleSheet.create({
         width: 200,
         height: 50,
         position: 'absolute',
-        bottom: 26,
         alignSelf: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',

@@ -45,18 +45,18 @@ class MyCardScreen extends Component {
                 <FindTitle />
                 <PickLanguage />
                 <FlatList
-                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.63 }}
+                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.60 }}
                     data={this.state.box}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20 }}>
-                    <TouchableOpacity>
-                        <Icon name="globe" size={50} color={secondaryColorCore} />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Discovery')}>
+                        <Icon name="globe" size={40} color={secondaryColorCore} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <Icon name="plus-circle" size={50} color={secondaryColorCore} />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddCard')}>
+                        <Icon name="plus-circle" size={40} color={secondaryColorCore} />
                     </TouchableOpacity>
 
                 </View>

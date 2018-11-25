@@ -28,13 +28,13 @@ class FirstScreen extends Component {
                         style={styles.box}
                         onPress={() => this.props.navigation.navigate('Topics')}
                     >
-                        <Icon name="user" size={20} color={secondaryColorCore} />
+                        <Icon name="user" size={20} color={'white'} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.box}
                         onPress={() => this.props.navigation.navigate('Discovery')}
                     >
-                        <Icon name="users" size={20} color={secondaryColorCore} />
+                        <Icon name="users" size={20} color={'white'} />
                     </TouchableOpacity>
                 </View>
 
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     },
     box: {
         borderColor: primaryColorCore,
+        backgroundColor: primaryColorCore,
         borderRadius: 12,
         borderWidth: 1,
         marginVertical: 10,

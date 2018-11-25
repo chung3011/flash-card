@@ -13,11 +13,12 @@ class FindTitle extends Component {
             <View>
                 <TextInput
                     style={{
-                        margin: 15,
-                        borderWidth: 1,
-                        borderRadius: 20,
+                        margin: 10,
+                        borderRadius: 10,
+                        padding: 5,
+                        borderWidth: 2,
                         borderColor: secondaryColorCore,
-                        padding: 10
+                        marginHorizontal: 20
                     }}
                     placeholder={'Find title'}
 

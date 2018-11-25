@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'white'
     },
     logoStyleView: {
         flex: 1,

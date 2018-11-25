@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   bottom: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 5
+    marginVertical: 3
   },
   flexRow: {
     flexDirection: 'row',

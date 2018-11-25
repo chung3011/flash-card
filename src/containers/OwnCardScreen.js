@@ -136,18 +136,28 @@ class OwnCardScreen extends Component {
         return (
 
             <View style={styles.container}>
-                {this.renderEditTitle()}
-                {this.renderEditLanguage()}
-                {this.renderSearch()}
-                {this.renderDetail()}
-                <FlatList
-                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.36, width: Dimensions.get("window").width * 0.95 }}
-                    data={data}
-                    renderItem={this.renderList}
-                    keyExtractor={item => item.toString()}
-                />
-                {this.renderWord()}
-                {this.renderDeleteButton()}
+                <View style={{ height: Dimensions.get("window").height * 0.31, alignItems: 'center' }}>
+                    {this.renderEditTitle()}
+                    {this.renderEditLanguage()}
+                    {this.renderSearch()}
+                    {this.renderDetail()}
+                </View>
+                <View style={{ height: Dimensions.get("window").height * 0.36, alignItems: 'center' }}>
+                    <FlatList
+                        style={{ flexGrow: 0, width: Dimensions.get("window").width * 0.95 }}
+                        data={data}
+                        renderItem={this.renderList}
+                        keyExtractor={item => item.toString()}
+                    />
+                </View>
+
+                <View style={{ height: Dimensions.get("window").height * 0.12 }}>
+                    {this.renderWord()}
+                </View>
+                <View style={{ height: Dimensions.get("window").height * 0.1 }}>
+                    {this.renderDeleteButton()}
+                </View>
+
 
             </View>
 
@@ -158,13 +168,11 @@ class OwnCardScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         marginTop: 10,
-        borderWidth: 1,
         borderRadius: 10,
-        borderColor: 'gray',
         padding: 5,
         borderWidth: 2,
         borderColor: secondaryColorCore,
@@ -173,8 +181,6 @@ const styles = StyleSheet.create({
     addButton: {
         width: 200,
         height: 50,
-        position: 'absolute',
-        bottom: 26,
         alignSelf: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',
