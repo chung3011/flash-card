@@ -3,49 +3,40 @@ import {
     Text, FlatList,
     View, Dimensions, TouchableOpacity
 } from 'react-native';
+
+import firebase from 'react-native-firebase';
+
 import FindTitle from '../components/FindTitle';
 import PickLanguage from '../components/PickLanguage';
 import Topic from '../components/Topic';
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const data = [
-    {
-        language: 'English',
-        title: 'animal'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
 
-]
 
 class MyCardScreen extends Component {
-    state = {}
+    state = {
+        box: [],
+    }
+
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                this.setState({ box: res._value != null ? res._value : [] })
+            })
+    }
 
     renderItem = (data) => {
-        return <Topic item={data.item} />
+        return <Topic
+            item={data.item}
+            navigation={this.props.navigation} />
     }
 
     render() {
@@ -55,7 +46,7 @@ class MyCardScreen extends Component {
                 <PickLanguage />
                 <FlatList
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.63 }}
-                    data={data}
+                    data={this.state.box}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />

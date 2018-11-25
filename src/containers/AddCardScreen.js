@@ -11,18 +11,35 @@ import Word from '../components/Word';
 import AddWord from '../components/AddWord';
 
 import { connect } from 'react-redux'
+import { cleanWord } from '../actions'
+import firebase from 'react-native-firebase';
 
 
 class AddCardScreen extends Component {
-    state = {}
+    state = {
+        box: []
+    }
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                this.setState({ box: res._value != null ? res._value : [] })
+            })
+    }
 
     renderAddTitle = () => (
         <View>
             <TextInput
                 style={styles.title}
                 placeholder={'Add title'}
-                onChangeText={(text) => this.setState({ text })}
-                value={this.state.text}
+                onChangeText={(title) => this.setState({ title })}
+                value={this.state.title}
                 underlineColorAndroid={'transparent'}
             />
         </View>
@@ -40,19 +57,40 @@ class AddCardScreen extends Component {
         keyExtractor={item => item.word}
     />
 
+    addCard = () => {
+        this.state.box.unshift({
+            language: this.state.language,
+            title: this.state.title,
+            words: this.props.topic
+        })
+        firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .set(this.state.box)
+        this.props.cleanWord()
+        this.props.navigation.navigate('Topics')
+    }
+
     renderAddButton = () => (
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+            style={styles.addButton}
+            onPress={this.addCard}
+        >
             <Text style={styles.textButton}>Add</Text>
             <Icon name="plus" size={30} color={'white'} />
         </TouchableOpacity>
     )
+
+    handleLanguage = (langValue) => {
+        this.setState({ language: langValue });
+    }
 
     render() {
 
         return (
             <View style={styles.container}>
                 {this.renderAddTitle()}
-                <PickLanguage />
+                <PickLanguage onSelectLanguage={this.handleLanguage} />
                 {this.renderWord()}
                 <AddWord />
                 {this.renderAddButton()}
@@ -95,4 +133,4 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({ topic }) => ({ topic })
-export default connect(mapStateToProps)(AddCardScreen);
+export default connect(mapStateToProps, { cleanWord })(AddCardScreen);

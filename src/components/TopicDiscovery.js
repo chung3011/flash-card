@@ -11,7 +11,11 @@ class TopicDiscovery extends Component {
   render() {
     return (
       <View>
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => this.props.navigation.navigate('OtherCard', {
+            topic: this.props.item,
+          })}>
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
             <TouchableOpacity>
@@ -21,10 +25,10 @@ class TopicDiscovery extends Component {
           </View>
           <Text style={styles.topic}>{this.props.item.title}</Text>
         </TouchableOpacity>
-          <View style={styles.flexRow}>
-            <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
-            <Text>10</Text>
-          </View>
+        <View style={styles.flexRow}>
+          <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
+          <Text>10</Text>
+        </View>
       </View>
     );
   }
@@ -55,9 +59,9 @@ const styles = StyleSheet.create({
     color: '#262626'
   },
   flexRow: {
-      flexDirection: 'row',
-      alignSelf: 'center',
-      marginVertical:5
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginVertical: 5
   }
 })
 export default TopicDiscovery;

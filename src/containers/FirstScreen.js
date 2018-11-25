@@ -5,13 +5,16 @@ import {
 } from 'react-native';
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import firebase from 'react-native-firebase'
+import MyCardScreen from './MyCardScreen';
 
 class FirstScreen extends Component {
     state = {}
+
+
     render() {
         return (
-            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 45 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 25 }}>
                 <View style={styles.container}>
                     <Text style={styles.text1}>User Mail</Text>
                     <Text style={styles.text2}>________</Text>
@@ -20,11 +23,17 @@ class FirstScreen extends Component {
                     <Text style={styles.text1} >Like</Text>
                     <Text style={styles.text2}>________</Text>
                 </View>
-                <View style={{ marginTop: 30 }}>
-                    <TouchableOpacity style={styles.box}>
+                <View style={{ marginTop: 20 }}>
+                    <TouchableOpacity
+                        style={styles.box}
+                        onPress={() => this.props.navigation.navigate('Topics')}
+                    >
                         <Icon name="user" size={20} color={secondaryColorCore} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.box}>
+                    <TouchableOpacity
+                        style={styles.box}
+                        onPress={() => this.props.navigation.navigate('Discovery')}
+                    >
                         <Icon name="users" size={20} color={secondaryColorCore} />
                     </TouchableOpacity>
                 </View>
@@ -59,7 +68,7 @@ const styles = StyleSheet.create({
         borderColor: primaryColorCore,
         borderRadius: 12,
         borderWidth: 1,
-        marginVertical: 15,
+        marginVertical: 10,
         height: 50,
         width: 100,
         justifyContent: 'center',

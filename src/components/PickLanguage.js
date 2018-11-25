@@ -8,6 +8,12 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 
 class PickLanguage extends Component {
     state = {}
+
+    handleLangChange = () => {
+        var lang = this.state.language;
+        this.props.onSelectLanguage(lang);
+    }
+
     render() {
         return (
             <View style={{

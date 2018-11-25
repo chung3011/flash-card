@@ -20,10 +20,10 @@ class LearnScreen extends Component {
                         padding: 10,
                         width: Dimensions.get("window").width * 0.9,
                     }}>
-                    <Text>Title</Text>
+                    <Text>{this.props.navigation.getParam("topic").title}</Text>
                 </View>
                 <View style={{
-                    marginVertical: 20,
+                    marginVertical: 10,
                     marginHorizontal: 125,
 
                     borderWidth: 1,
@@ -44,8 +44,8 @@ class LearnScreen extends Component {
                         <Picker.Item label="Forgot" value="Forgot" />
                     </Picker>
                 </View>
-                <Card></Card>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 20 }}>
+                <Card topic={this.props.navigation.getParam("topic")} />
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10 }}>
                     <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
                         <Text>Remembered</Text>
                     </TouchableOpacity>

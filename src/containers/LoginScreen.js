@@ -23,7 +23,7 @@ class LoginScreen extends Component {
             <Image
                 style={styles.imgStyle}
                 resizeMode='contain'
-                source={require('../../imgs/Logo.jpg')}
+                source={require('../../imgs/logo.jpg')}
             />
         </View>
     )

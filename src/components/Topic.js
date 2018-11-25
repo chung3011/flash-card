@@ -11,7 +11,14 @@ class Topic extends Component {
   render() {
     return (
       <View>
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => this.props.navigation.navigate('Learn', {
+            topic: this.props.item,
+          })}
+          onLongPress={() => this.props.navigation.navigate('OwnCard', {
+            topic: this.props.item,
+          })}>
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
             <TouchableOpacity>

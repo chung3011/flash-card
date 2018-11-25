@@ -95,7 +95,7 @@ class OwnCardScreen extends Component {
     }
 
     renderWord = () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' ,marginStart: 45}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginStart: 45 }}>
             <TextInput style={{
                 borderWidth: 2,
                 borderColor: primaryColorCore,
@@ -103,6 +103,7 @@ class OwnCardScreen extends Component {
                 marginVertical: 15,
                 marginRight: 20,
                 borderRadius: 10,
+                paddingLeft: 5
             }}
                 placeholder={'word'}
             ></TextInput>
@@ -113,6 +114,7 @@ class OwnCardScreen extends Component {
                 marginVertical: 15,
                 marginRight: 15,
                 borderRadius: 10,
+                paddingLeft: 5
             }}
                 placeholder={'mean'}
             ></TextInput>
