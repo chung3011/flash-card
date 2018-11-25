@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 import PickLanguage from '../components/PickLanguage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { primaryColorCore } from '../style';
+import { primaryColorCore, secondaryColorCore } from '../style';
+
 import Word from '../components/Word';
 import AddWord from '../components/AddWord';
 
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         padding: 5,
         borderWidth: 2,
-        borderColor: primaryColorCore
+        borderColor: secondaryColorCore
     },
     addButton: {
-        width: 125,
+        width: 200,
         height: 50,
         position: 'absolute',
         bottom: 26,

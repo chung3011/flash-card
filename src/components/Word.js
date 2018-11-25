@@ -6,6 +6,7 @@ import {
 import WordOneSide from './WordOneSide';
 
 class Word extends Component {
+
   state = {}
   render() {
     return (

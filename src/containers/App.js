@@ -19,6 +19,8 @@ import MyCardScreen from './MyCardScreen';
 import AddCardScreen from './AddCardScreen';
 import LearnScreen from './LearnScreen'
 import DiscoveryScreen from './DiscoveryScreen';
+import OwnCardScreen from './OwnCardScreen';
+import OtherCard from './OtherCard'
 
 const store = createStore(rootReducer)
 
@@ -27,8 +29,9 @@ class App extends Component {
 
   render() {
     return (
+
       <Provider style={{ flex: 1 }} store={store}>
-        <AddCardScreen />
+        <OwnCardScreen />
       </Provider>
     );
   }
