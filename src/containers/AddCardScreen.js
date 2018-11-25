@@ -17,7 +17,11 @@ import firebase from 'react-native-firebase';
 
 class AddCardScreen extends Component {
     state = {
-        box: []
+        box: [],
+        title: '',
+        language: '',
+        like: 0,
+        point:0,
     }
 
     componentDidMount() {
@@ -61,7 +65,9 @@ class AddCardScreen extends Component {
         this.state.box.unshift({
             language: this.state.language,
             title: this.state.title,
-            words: this.props.topic
+            words: this.props.topic,
+            like: this.state.like,
+            point: this.state.point,
         })
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)

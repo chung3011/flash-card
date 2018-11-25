@@ -63,17 +63,6 @@ const Navigation = createStackNavigator({
         color: primaryColorCore
 
       },
-      headerRight:
-        <TouchableOpacity onPress={() => navigation.navigate('AddCard')}>
-          <Text style={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            color: primaryColorCore,
-            marginEnd: 20,
-          }}>
-            Add Card
-        </Text>
-        </TouchableOpacity >
     })
   },
   AddCard: {

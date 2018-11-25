@@ -10,13 +10,12 @@ class WordForm extends Component {
     state = {}
     render() {
         return (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center' , marginVertical: 10,}}>
                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={{
                         borderWidth: 2,
                         borderColor: primaryColorCore,
                         width: 100,
-                        marginVertical: 15,
                         marginRight: 20,
                         borderRadius: 10,
                         padding:10
@@ -26,7 +25,6 @@ class WordForm extends Component {
                         borderWidth: 2,
                         borderColor: primaryColorCore,
                         width: 100,
-                        marginVertical: 15,
                         borderRadius: 10,
                         padding:10
                     }}

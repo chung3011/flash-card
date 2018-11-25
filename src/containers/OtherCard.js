@@ -46,7 +46,9 @@ const data = [
 ]
 
 class OtherCard extends Component {
-    state = {}
+    state = {
+        isLike: false
+    }
 
     renderTitle = () => (
         <View style={{ marginTop: 20, width: Dimensions.get("window").width * 0.95 }}>
@@ -76,8 +78,14 @@ class OtherCard extends Component {
             <View style={styles.container}>
                 {this.renderTitle()}
                 {this.renderLanguage()}
+                <TouchableOpacity
+                    style={{ marginVertical: 15 , flexDirection: 'row'}}
+                    onPress={() => this.setState({ isLike: !this.state.isLike })}>
+                    <Icon name="heart" size={20} style={{ color: this.state.isLike ? primaryColorCore : 'gray' }} />
+                    <Text style={{marginHorizontal:9}}>9</Text>
+                </TouchableOpacity>
                 <FlatList
-                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.52, width: Dimensions.get("window").width * 0.95 , marginTop:20}}
+                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.45, width: Dimensions.get("window").width * 0.95 }}
                     data={data}
                     renderItem={this.renderList}
                     keyExtractor={item => item.toString()}
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: secondaryColorCore,
         marginHorizontal: 20,
-        fontSize:15
+        fontSize: 15
     },
     addButton: {
         width: 200,
