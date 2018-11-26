@@ -5,13 +5,18 @@ import {
 } from 'react-native';
 import WordOneSide from './WordOneSide';
 
-class Word extends Component {
 
+class Word extends Component {
   state = {}
   render() {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <WordOneSide side={'left'} text={this.props.item.word} />
+        <WordOneSide
+          side={'left'}
+          text={this.props.item.word}
+          remembered={this.props.item.remembered}
+          screen={this.props.screen}
+        />
         <WordOneSide side={'right'} text={this.props.item.mean} />
       </View>
     );

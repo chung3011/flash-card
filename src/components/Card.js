@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Text, Picker,
-    View, Dimensions, StyleSheet,FlatList
+    View, Dimensions, StyleSheet, FlatList
 } from 'react-native';
 import firebase from 'react-native-firebase';
 
@@ -15,30 +15,21 @@ class Card extends Component {
         box: []
     }
 
-    componentDidMount() {
-        this.loadData()
-    }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .on('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
-    }
-
     renderItem = (data) => {
         return <Flip item={data.item} />
     }
 
     render() {
         return (
-            <View style={{ width: Dimensions.get("window").width * 0.9, height: Dimensions.get("window").width * 0.9, marginVertical: 30, }}>
+            <View style={{
+                width: Dimensions.get("window").width,
+                height: Dimensions.get("window").width,
+                marginVertical: 20
+            }}>
                 <Swiper style={styles.wrapper} showsButtons={false} dotColor={'rgb(179, 179, 204)'} activeDotColor={'rgb(204, 0, 102)'}>
                     <FlatList
                         style={{ flexGrow: 0 }}
-                        data={this.state.box}
+                        data={this.props.topic.words}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.toString()}
                         horizontal={true}

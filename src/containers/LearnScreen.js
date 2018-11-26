@@ -22,12 +22,11 @@ class LearnScreen extends Component {
                         width: Dimensions.get("window").width * 0.9,
                         borderColor: secondaryColorCore
                     }}>
-                    <Text>{this.props.navigation.getParam("topic").title}</Text>
+                    <Text style={{ fontSize: 18, color: 'black' }}>{this.props.navigation.getParam("topic").title}</Text>
                 </View>
                 <View style={{
                     marginVertical: 10,
                     marginHorizontal: 125,
-
                     borderWidth: 1,
                     borderRadius: 5,
                     borderColor: 'gray',
@@ -46,15 +45,8 @@ class LearnScreen extends Component {
                         <Picker.Item label="Forgot" value="Forgot" />
                     </Picker>
                 </View>
+
                 <Card topic={this.props.navigation.getParam("topic")} />
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10 }}>
-                    <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)',backgroundColor:'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                        <Text style={{color:'white', fontWeight:'bold'}}>Remembered</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)',backgroundColor:'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                        <Text style={{color:'white', fontWeight:'bold'}}>Forgot</Text>
-                    </TouchableOpacity>
-                </View>
 
             </View>
         );

@@ -21,7 +21,10 @@ class FirstScreen extends Component {
         firebase.database().ref(`/users`)
             .child(firebase.auth().currentUser.uid)
             .once('value', res => {
-                this.setState({ name: res._value.name })
+                this.setState({
+                    name: res._value.name,
+                    box: res._value.box == null ? 0 : res._value.box.length
+                })
             })
     }
 
@@ -37,7 +40,7 @@ class FirstScreen extends Component {
                     >
                         {this.state.name}</TextInput>
                     <Text style={styles.text1} >Number of Box</Text>
-                    <Text style={styles.text2}>________</Text>
+                    <Text style={styles.text2}>{this.state.box}</Text>
                     <Text style={styles.text1} >Like</Text>
                     <Text style={styles.text2}>________</Text>
                 </View>
@@ -79,7 +82,8 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     text2: {
-        fontSize: 15,
+        fontSize: 20,
+        color: 'black',
         marginVertical: 5
     },
     box: {

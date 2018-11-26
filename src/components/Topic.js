@@ -31,11 +31,11 @@ class Topic extends Component {
         <View style={styles.bottom}>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
-            <Text style={{width:25}}>{this.props.item.like}</Text>
+            <Text style={{ width: 25 }}>{this.props.item.like}</Text>
           </View>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={17} />
-            <Text style={{width:25}}>{this.props.item.point}</Text>
+            <Text style={{ width: 25 }}>{this.props.item.point}</Text>
           </View>
         </View>
       </View>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   language: {
-    fontSize: 20,
+    fontSize: 15,
     color: '#f2f2f2',
     flex: 1
   },

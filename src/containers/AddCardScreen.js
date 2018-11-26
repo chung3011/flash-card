@@ -19,9 +19,9 @@ class AddCardScreen extends Component {
     state = {
         box: [],
         title: '',
-        language: '',
+        language: 'English',
         like: 0,
-        point:0,
+        point: 0,
     }
 
     componentDidMount() {
@@ -101,8 +101,8 @@ class AddCardScreen extends Component {
                 </View>
 
                 <View style={{ height: Dimensions.get("window").height * 0.55 }}>
-                    {this.renderWord()}
                     <AddWord />
+                    {this.renderWord()}
                 </View>
                 <View style={{ height: Dimensions.get("window").height * 0.1 }}>
                     {this.renderAddButton()}

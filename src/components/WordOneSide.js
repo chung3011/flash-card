@@ -5,12 +5,15 @@ import {
 } from 'react-native';
 import { primaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { CheckBox } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { delWord } from '../actions'
 
 class WordOneSide extends Component {
-    state = {}
+    state = {
+        status: this.props.remembered
+    }
 
     delWord = () => {
         this.props.delWord({
@@ -21,6 +24,15 @@ class WordOneSide extends Component {
     render() {
         return (
             <View style={[styles.container, { justifyContent: this.props.side == 'left' ? 'flex-end' : 'flex-start' }]}>
+                {this.props.side == 'left' && this.props.screen == 'ownCard'
+                    && <View style={{ justifyContent: 'center', alignItems: 'center', width: 45 }}>
+                        <CheckBox
+                            size={27}
+                            checked={this.state.status}
+                            onPress={() => this.setState({ status: !this.state.status })}
+                        />
+                    </View>}
+
                 <Text style={styles.text} >{this.props.text}</Text>
                 {this.props.side == 'right'
                     && <TouchableOpacity

@@ -9,9 +9,9 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 class PickLanguage extends Component {
     state = {}
 
-    handleLangChange = () => {
-        var lang = this.state.language;
-        this.props.onSelectLanguage(lang);
+    handleLangChange = (itemValue) => {
+        this.setState({ language: itemValue })
+        this.props.onSelectLanguage(itemValue);
     }
 
     render() {
@@ -29,7 +29,7 @@ class PickLanguage extends Component {
                         height: 30,
                         width: Dimensions.get("window").width - 60,
                     }}
-                    onValueChange={(itemValue, itemIndex) => this.setState({ language: itemValue })}>
+                    onValueChange={(itemValue, itemIndex) => this.handleLangChange(itemValue)}>
                     <Picker.Item label="English" value="English" />
                     <Picker.Item label="Japanese" value="Japanese" />
                     <Picker.Item label="Korean" value="Korean" />
