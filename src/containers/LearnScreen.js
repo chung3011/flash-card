@@ -4,6 +4,7 @@ import {
     View, Dimensions, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import Card from './../components/Card'
+import { secondaryColorCore } from '../style';
 
 class LearnScreen extends Component {
     state = {}
@@ -14,11 +15,12 @@ class LearnScreen extends Component {
                 <View
                     style={{
                         margin: 10,
-                        borderWidth: 1,
-                        borderRadius: 20,
+                        borderWidth: 2,
+                        borderRadius: 10,
                         borderColor: 'gray',
                         padding: 10,
                         width: Dimensions.get("window").width * 0.9,
+                        borderColor: secondaryColorCore
                     }}>
                     <Text>{this.props.navigation.getParam("topic").title}</Text>
                 </View>

@@ -51,13 +51,13 @@ class OtherCard extends Component {
     }
 
     renderTitle = () => (
-        <View style={{ marginTop: 20, width: Dimensions.get("window").width * 0.95 }}>
+        <View style={{ marginTop: 10, width: Dimensions.get("window").width * 0.95 }}>
             <Text style={styles.title}>Title</Text>
         </View>
     )
 
     renderLanguage = () => (
-        <View style={{ marginTop: 10, width: Dimensions.get("window").width * 0.95 }}>
+        <View style={{  marginTop: 5, width: Dimensions.get("window").width -60 }}>
             <Text style={styles.title}>Language</Text>
         </View>
     )
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         borderColor: 'gray',
-        padding: 5,
+        padding: 10,
         borderWidth: 2,
         borderColor: secondaryColorCore,
         marginHorizontal: 20,
