@@ -47,14 +47,6 @@ class LearnScreen extends Component {
                     </Picker>
                 </View>
                 <Card topic={this.props.navigation.getParam("topic")} />
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginVertical: 10 }}>
-                    <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)',backgroundColor:'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                        <Text style={{color:'white', fontWeight:'bold'}}>Remembered</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)',backgroundColor:'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                        <Text style={{color:'white', fontWeight:'bold'}}>Forgot</Text>
-                    </TouchableOpacity>
-                </View>
 
             </View>
         );
