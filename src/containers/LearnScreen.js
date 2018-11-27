@@ -6,8 +6,12 @@ import {
 import Card from './../components/Card'
 import { secondaryColorCore } from '../style';
 
+
 class LearnScreen extends Component {
-    state = {}
+    state = {
+
+    }
+
 
     render() {
         return (
@@ -52,6 +56,5 @@ class LearnScreen extends Component {
         );
     }
 }
-
 
 export default LearnScreen;

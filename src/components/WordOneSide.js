@@ -8,17 +8,25 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements'
 
 import { connect } from 'react-redux'
-import { delWord } from '../actions'
+import { delWord, updateStatus } from '../actions'
 
 class WordOneSide extends Component {
     state = {
-        status: this.props.remembered
+        status: this.props.status
     }
 
     delWord = () => {
         this.props.delWord({
             mean: this.props.text
         })
+    }
+
+    updateStatus = () => {
+        this.setState({ status: !this.state.status })
+        this.props.updateStatus({
+            word: this.props.text,
+        })
+
     }
 
     render() {
@@ -29,7 +37,7 @@ class WordOneSide extends Component {
                         <CheckBox
                             size={27}
                             checked={this.state.status}
-                            onPress={() => this.setState({ status: !this.state.status })}
+                            onPress={this.updateStatus}
                         />
                     </View>}
 
@@ -68,4 +76,4 @@ const styles = StyleSheet.create({
         elevation: 2
     }
 })
-export default connect(null, { delWord })(WordOneSide);
+export default connect(null, { delWord, updateStatus })(WordOneSide);

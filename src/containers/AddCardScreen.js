@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Text, TextInput, StyleSheet, FlatList,
-    View, TouchableOpacity, Dimensions
+    View, TouchableOpacity, Dimensions, Alert
 } from 'react-native';
 import PickLanguage from '../components/PickLanguage';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -37,6 +37,11 @@ class AddCardScreen extends Component {
             })
     }
 
+    componentWillUnmount() {
+        this.props.cleanWord()
+        this.setState({ canceled: true })
+    }
+
     renderAddTitle = () => (
         <View>
             <TextInput
@@ -49,23 +54,27 @@ class AddCardScreen extends Component {
         </View>
     )
 
-    renderItem = ({ item }) => {
-        console.log(item)
-    }
-
-
-    renderWord = () => <FlatList
-        style={{ flexGrow: 0 }}
-        data={this.props.topic}
-        renderItem={({ item }) => <Word item={item} />}
-        keyExtractor={item => item.word}
-    />
+    renderWord = () => (
+        <FlatList
+            style={{ flexGrow: 0 }}
+            data={this.props.words}
+            renderItem={({ item }) => <Word item={item} />}
+            keyExtractor={item => item.word}
+        />
+    )
 
     addCard = () => {
+        let titleExist = this.state.box.filter(item => item.title == this.state.title)
+        if (titleExist.length !== 0) {
+            return Alert.alert('Title exist!')
+        }
+        if (this.props.words.length == 0) {
+            return Alert.alert('Can not create topic without word.')
+        }
         this.state.box.unshift({
             language: this.state.language,
             title: this.state.title,
-            words: this.props.topic,
+            words: this.props.words,
             like: this.state.like,
             point: this.state.point,
         })
@@ -101,8 +110,8 @@ class AddCardScreen extends Component {
                 </View>
 
                 <View style={{ height: Dimensions.get("window").height * 0.55 }}>
-                    <AddWord />
-                    {this.renderWord()}
+                    <AddWord words={this.props.words} />
+                    {!this.state.canceled && this.renderWord()}
                 </View>
                 <View style={{ height: Dimensions.get("window").height * 0.1 }}>
                     {this.renderAddButton()}
@@ -118,6 +127,8 @@ const styles = StyleSheet.create({
     },
     title: {
         margin: 20,
+        fontSize: 16,
+        paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 10,
         borderColor: 'gray',
@@ -145,5 +156,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ topic }) => ({ topic })
+const mapStateToProps = ({ words }) => ({ words })
 export default connect(mapStateToProps, { cleanWord })(AddCardScreen);

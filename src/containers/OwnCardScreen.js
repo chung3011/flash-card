@@ -8,9 +8,41 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AddWord from '../components/AddWord'
 import Word from '../components/Word';
 
+import { connect } from 'react-redux'
+import { addWords, cleanWord } from '../actions'
+
+import firebase from 'react-native-firebase';
 
 class OwnCardScreen extends Component {
     state = {}
+
+    componentDidMount() {
+        this.props.addWords({
+            words: this.props.navigation.getParam("topic").words
+        })
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                this.setState({ box: res._value != null ? res._value : [] })
+            })
+    }
+
+
+    componentWillUnmount() {
+        !this.state.deleteBox && firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title)}`)
+            .child('words')
+            .set(this.props.words)
+        this.props.cleanWord()
+
+    }
 
     renderEditTitle = () => (
         <View style={{ marginTop: 5, width: Dimensions.get("window").width * 0.95 }}>
@@ -72,11 +104,24 @@ class OwnCardScreen extends Component {
     }
 
     renderWord = () => (
-        <AddWord />
+        <AddWord words={this.props.words} />
     )
 
+    deleteBox = () => {
+        let deleteBox = this.state.box.filter(item => item.title !== this.props.navigation.getParam("topic").title)
+        firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .set(deleteBox)
+        this.setState({ deleteBox: true })
+        this.props.navigation.navigate('Topics')
+    }
+
     renderDeleteButton = () => (
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+            style={styles.addButton}
+            onPress={this.deleteBox}
+        >
             <Text style={styles.textButton}>Delete</Text>
             <Icon name="trash" size={30} color={'white'} />
         </TouchableOpacity>
@@ -96,7 +141,7 @@ class OwnCardScreen extends Component {
                 <View style={{ height: Dimensions.get("window").height * 0.36, alignItems: 'center' }}>
                     <FlatList
                         style={{ flexGrow: 0 }}
-                        data={this.props.navigation.getParam("topic").words}
+                        data={this.props.words}
                         renderItem={this.renderList}
                         keyExtractor={item => item.toString()}
                     />
@@ -147,4 +192,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default OwnCardScreen;
+const mapStateToProps = ({ words }) => ({ words })
+export default connect(mapStateToProps, { addWords, cleanWord })(OwnCardScreen);
