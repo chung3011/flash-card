@@ -86,15 +86,15 @@ class OwnCardScreen extends Component {
         }}>
             <View style={{ marginHorizontal: 15, flexDirection: 'row' }}>
                 <Icon style={{ marginEnd: 5 }} name="heart" size={20} />
-                <Text style={{ marginLeft: 5 }}>10</Text>
+                <Text style={{ marginLeft: 5 }}>{this.props.navigation.getParam("topic").like}</Text>
             </View>
             <View style={{ marginHorizontal: 15, flexDirection: 'row' }}>
                 <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={20} />
-                <Text style={{ marginLeft: 5 }}>40/50</Text>
+                <Text style={{ marginLeft: 5 }}>{this.props.navigation.getParam("topic").learn}</Text>
             </View>
             <View style={{ marginHorizontal: 15, flexDirection: 'row' }}>
                 <Icon style={{ marginEnd: 5 }} name="gamepad" size={20} />
-                <Text style={{ marginLeft: 5 }}>9</Text>
+                <Text style={{ marginLeft: 5 }}>{this.props.navigation.getParam("topic").point}</Text>
             </View>
         </View>
     )

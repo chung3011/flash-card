@@ -22,6 +22,7 @@ class AddCardScreen extends Component {
         language: 'English',
         like: 0,
         point: 0,
+        learn:0
     }
 
     componentDidMount() {
@@ -69,7 +70,7 @@ class AddCardScreen extends Component {
             return Alert.alert('Title exist!')
         }
         if (this.props.words.length == 0) {
-            return Alert.alert('Can not create topic without word.')
+            return Alert.alert('Can not create topic without word!')
         }
         this.state.box.unshift({
             language: this.state.language,
@@ -77,6 +78,7 @@ class AddCardScreen extends Component {
             words: this.props.words,
             like: this.state.like,
             point: this.state.point,
+            learn: this.state.learn
         })
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
