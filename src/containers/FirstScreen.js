@@ -28,6 +28,7 @@ class FirstScreen extends Component {
             })
     }
 
+
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 25 }}>

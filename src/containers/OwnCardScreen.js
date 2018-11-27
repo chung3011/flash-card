@@ -137,12 +137,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: primaryColorCore,
         borderRadius: 15,
-        elevation: 2
+        elevation: 2,
+        marginTop:20
     },
     textButton: {
         color: 'white',
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     }
 })
 

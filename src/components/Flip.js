@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import {
-<<<<<<< HEAD
-    Text, TouchableOpacity,
-    View, Dimensions, StyleSheet
-=======
     Text,
     View, Dimensions, StyleSheet, TouchableOpacity
->>>>>>> 7f9566769e5d4bf1c5276c401859323edec31ae7
 } from 'react-native';
 import FlipCard from 'react-native-flip-card'
 import { primaryColorCore } from '../style';
@@ -20,15 +15,11 @@ class Flip extends Component {
         return (
             <View style={styles.slide1}>
                 <FlipCard
-<<<<<<< HEAD
                     style={{
                         width: Dimensions.get("window").width - 30,
                         height: Dimensions.get("window").width - 30,
                         marginHorizontal: 15
                     }}
-=======
-                    style={{ width: Dimensions.get("window").width * 0.9, height: Dimensions.get("window").width * 0.9, }}
->>>>>>> 7f9566769e5d4bf1c5276c401859323edec31ae7
                     friction={6}
                     perspective={1000}
                     flipHorizontal={true}
@@ -38,7 +29,6 @@ class Flip extends Component {
                     onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
                 >
                     <View style={styles.face}>
-<<<<<<< HEAD
                         <Text style={styles.text} >{this.props.item.word}</Text>
                         <TouchableOpacity
                             style={[
@@ -67,23 +57,6 @@ class Flip extends Component {
                             <Text style={{ color: 'white', fontWeight: 'bold' }}>Remembered</Text>
                         </TouchableOpacity>
                     </View>
-=======
-                        <Text style={styles.text} >Word</Text>
-                        <View style={{ marginTop: 100 }}>
-                            <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)', backgroundColor: 'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                                <Text style={{ color: 'white', fontWeight: 'bold' }}>Remembered</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={styles.face}>
-                        <Text style={styles.meanText} >Mean</Text>
-                        <View style={{ marginTop: 100 }}>
-                            <TouchableOpacity style={{ borderColor: 'rgb(204, 0, 102)', backgroundColor: 'rgb(204, 0, 102)', borderRadius: 5, width: 100, height: 50, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginHorizontal: 20, }}>
-                                <Text style={{ color: 'white', fontWeight: 'bold' }}>Remembered</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
->>>>>>> 7f9566769e5d4bf1c5276c401859323edec31ae7
                 </FlipCard>
             </View>
         );
