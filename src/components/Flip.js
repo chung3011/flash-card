@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-    Text, TouchableOpacity,
-    View, Dimensions, StyleSheet
+    Text,
+    View, Dimensions, StyleSheet, TouchableOpacity
 } from 'react-native';
 import FlipCard from 'react-native-flip-card'
 import { primaryColorCore } from '../style';

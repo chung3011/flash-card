@@ -22,7 +22,7 @@ class Card extends Component {
         firebase.database().ref(`/users`)
             .child(firebase.auth().currentUser.uid)
             .child('box')
-            .once('value', res => {
+            .on('value', res => {
                 this.setState({ box: res._value != null ? res._value : [] })
             })
     }

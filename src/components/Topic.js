@@ -48,7 +48,7 @@ class Topic extends Component {
           {
             this.props.screen == 'Topics' && <View style={styles.flexRow}>
               <Icon style={{ marginEnd: 5, }} name="graduation-cap" size={17} />
-              <Text style={{ width: 25 }}>{this.props.item.point}</Text>
+              <Text style={{ width: 25 }}>{this.props.item.learn}</Text>
             </View>
           }
         </View>

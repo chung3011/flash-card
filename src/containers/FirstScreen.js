@@ -44,6 +44,9 @@ class FirstScreen extends Component {
             .set(this.state.listUserUid)
     }
 
+    signOut = () => { firebase.auth().signOut() }
+
+
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 25 }}>
@@ -52,28 +55,38 @@ class FirstScreen extends Component {
                     <TextInput
                         underlineColorAndroid={'rgba(0,0,0,0)'}
                         placeholder={'Enter your name'}
-                        style={{ fontSize: 20 }}
+                        style={{ fontSize: 20, textAlign: 'center', width: 160 }}
                     >
                         {this.state.name}</TextInput>
+
                     <Text style={styles.text1} >Number of Box</Text>
                     <Text style={styles.text2}>{this.state.boxLength}</Text>
                     <Text style={styles.text1} >Like</Text>
                     <Text style={styles.text2}>________</Text>
                 </View>
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 10, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 15, width: Dimensions.get("window").width * 0.7 }}>
+                        <TouchableOpacity
+                            style={styles.box}
+                            onPress={() => this.props.navigation.navigate('Topics')}
+                        >
+                            <Icon name="user" size={20} color={'white'} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.box}
+                            onPress={() => this.props.navigation.navigate('Discovery', {
+                                listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
+                            })}
+                        >
+                            <Icon name="users" size={20} color={'white'} />
+                        </TouchableOpacity>
+                    </View>
+
                     <TouchableOpacity
                         style={styles.box}
-                        onPress={() => this.props.navigation.navigate('Topics')}
+                        onPress={this.signOut}
                     >
-                        <Icon name="user" size={20} color={'white'} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.box}
-                        onPress={() => this.props.navigation.navigate('Discovery', {
-                            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
-                        })}
-                    >
-                        <Icon name="users" size={20} color={'white'} />
+                        <Icon name="sign-out" size={20} color={'white'} />
                     </TouchableOpacity>
                 </View>
 
@@ -110,8 +123,8 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderWidth: 1,
         marginVertical: 10,
-        height: 50,
-        width: 100,
+        height: 45,
+        width: 80,
         justifyContent: 'center',
         alignItems: 'center'
     }
