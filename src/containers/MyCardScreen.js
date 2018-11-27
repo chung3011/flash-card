@@ -35,6 +35,7 @@ class MyCardScreen extends Component {
 
     renderItem = (data) => {
         return <Topic
+            screen={'Topics'}
             item={data.item}
             navigation={this.props.navigation} />
     }

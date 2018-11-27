@@ -9,22 +9,34 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class Topic extends Component {
   state = {}
   render() {
+
     return (
       <View>
         <TouchableOpacity
           style={styles.container}
-          onPress={() => this.props.navigation.navigate('Learn', {
+          onPress={() => this.props.screen == 'Discovery'
+            ? this.props.navigation.navigate('OtherCard', {
+              topic: this.props.item,
+            })
+            : this.props.navigation.navigate('Learn', {
+              topic: this.props.item,
+            })}
+          onLongPress={() => this.props.screen == 'Topics' && this.props.navigation.navigate('OwnCard', {
             topic: this.props.item,
           })}
-          onLongPress={() => this.props.navigation.navigate('OwnCard', {
-            topic: this.props.item,
-          })}>
+        >
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
-            <TouchableOpacity>
-              <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="question-circle" size={27} color={'white'} />
+            {
+              this.props.screen == 'Discovery'
+                ? <TouchableOpacity>
+                  <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="plus-circle" size={27} color={'white'} />
+                </TouchableOpacity>
+                : <TouchableOpacity>
+                  <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="question-circle" size={27} color={'white'} />
 
-            </TouchableOpacity>
+                </TouchableOpacity>
+            }
           </View>
           <Text style={styles.topic}>{this.props.item.title}</Text>
         </TouchableOpacity>
@@ -33,10 +45,12 @@ class Topic extends Component {
             <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
             <Text style={{ width: 25 }}>{this.props.item.like}</Text>
           </View>
-          <View style={styles.flexRow}>
-            <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={17} />
-            <Text style={{ width: 25 }}>{this.props.item.point}</Text>
-          </View>
+          {
+            this.props.screen == 'Topics' && <View style={styles.flexRow}>
+              <Icon style={{ marginEnd: 5, }} name="graduation-cap" size={17} />
+              <Text style={{ width: 25 }}>{this.props.item.point}</Text>
+            </View>
+          }
         </View>
       </View>
     );
@@ -54,16 +68,18 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: primaryColorCore,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     padding: 10,
     flexDirection: 'row',
   },
   language: {
-    fontSize: 15,
+    fontSize: 17,
     color: '#f2f2f2',
     flex: 1
   },
   topic: {
-    fontSize: 17,
+    fontSize: 20,
     margin: 10,
     color: '#262626'
   },

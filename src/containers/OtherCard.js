@@ -7,43 +7,6 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WordForm from './../components/WordForm'
 
-const data = [
-    {
-        mean: 'đỏ',
-        word: 'red',
-        remembered: false
-    },
-    {
-        mean: 'xanh dương',
-        word: 'blue',
-        remembered: true
-    },
-    {
-        mean: 'xanh lá',
-        word: 'green',
-        remembered: true
-    },
-    {
-        mean: 'vàng',
-        word: 'yellow',
-        remembered: false
-    },
-    {
-        mean: 'xanh dương',
-        word: 'blue',
-        remembered: true
-    },
-    {
-        mean: 'xanh lá',
-        word: 'green',
-        remembered: true
-    },
-    {
-        mean: 'vàng',
-        word: 'yellow',
-        remembered: false
-    }
-]
 
 class OtherCard extends Component {
     state = {
@@ -52,13 +15,13 @@ class OtherCard extends Component {
 
     renderTitle = () => (
         <View style={{ marginTop: 10, width: Dimensions.get("window").width * 0.95 }}>
-            <Text style={styles.title}>Title</Text>
+            <Text style={styles.title}>{this.props.navigation.getParam("topic").title}</Text>
         </View>
     )
 
     renderLanguage = () => (
-        <View style={{  marginTop: 5, width: Dimensions.get("window").width -60 }}>
-            <Text style={styles.title}>Language</Text>
+        <View style={{ marginTop: 5, width: Dimensions.get("window").width - 60 }}>
+            <Text style={styles.title}>{this.props.navigation.getParam("topic").language}</Text>
         </View>
     )
 
@@ -79,14 +42,14 @@ class OtherCard extends Component {
                 {this.renderTitle()}
                 {this.renderLanguage()}
                 <TouchableOpacity
-                    style={{ marginVertical: 15 , flexDirection: 'row'}}
+                    style={{ marginVertical: 15, flexDirection: 'row' }}
                     onPress={() => this.setState({ isLike: !this.state.isLike })}>
                     <Icon name="heart" size={20} style={{ color: this.state.isLike ? primaryColorCore : 'gray' }} />
-                    <Text style={{marginHorizontal:9}}>9</Text>
+                    <Text style={{ marginHorizontal: 9 }}>9</Text>
                 </TouchableOpacity>
                 <FlatList
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.45, width: Dimensions.get("window").width * 0.95 }}
-                    data={data}
+                    data={this.props.navigation.getParam("topic").words}
                     renderItem={this.renderList}
                     keyExtractor={item => item.toString()}
                 />
@@ -116,7 +79,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 50,
         position: 'absolute',
-        bottom: 40,
+        bottom: 30,
         alignSelf: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',

@@ -27,7 +27,7 @@ class OwnCardScreen extends Component {
         firebase.database().ref(`/users`)
             .child(firebase.auth().currentUser.uid)
             .child('box')
-            .on('value', res => {
+            .once('value', res => {
                 this.setState({ box: res._value != null ? res._value : [] })
             })
     }

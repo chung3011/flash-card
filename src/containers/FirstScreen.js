@@ -10,11 +10,13 @@ import MyCardScreen from './MyCardScreen';
 
 class FirstScreen extends Component {
     state = {
-        name: '______'
+        name: '______',
+        listUserUid: []
     }
 
     componentDidMount() {
         this.loadData()
+        this.saveUserUid()
     }
 
     loadData() {
@@ -23,9 +25,23 @@ class FirstScreen extends Component {
             .once('value', res => {
                 this.setState({
                     name: res._value.name,
-                    box: res._value.box == null ? 0 : res._value.box.length
+                    boxLength: res._value.box == null ? 0 : res._value.box.length
                 })
             })
+        firebase.database().ref(`/users`)
+            .child('userUid')
+            .once('value', res => {
+                this.setState({
+                    listUserUid: res._value == null ? [] : res._value
+                })
+            })
+    }
+
+    saveUserUid() {
+        this.state.listUserUid.unshift(firebase.auth().currentUser.uid)
+        firebase.database().ref(`/users`)
+            .child('userUid')
+            .set(this.state.listUserUid)
     }
 
     render() {
@@ -40,7 +56,7 @@ class FirstScreen extends Component {
                     >
                         {this.state.name}</TextInput>
                     <Text style={styles.text1} >Number of Box</Text>
-                    <Text style={styles.text2}>{this.state.box}</Text>
+                    <Text style={styles.text2}>{this.state.boxLength}</Text>
                     <Text style={styles.text1} >Like</Text>
                     <Text style={styles.text2}>________</Text>
                 </View>
@@ -53,7 +69,9 @@ class FirstScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.box}
-                        onPress={() => this.props.navigation.navigate('Discovery')}
+                        onPress={() => this.props.navigation.navigate('Discovery', {
+                            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
+                        })}
                     >
                         <Icon name="users" size={20} color={'white'} />
                     </TouchableOpacity>

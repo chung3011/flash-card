@@ -8,26 +8,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { connect } from 'react-redux'
 import { addWord } from '../actions'
-// import firebase from 'react-native-firebase';
 
 class AddWord extends Component {
     state = {
         word: '',
         mean: ''
     }
-
-    // componentDidMount() {
-    //     this.loadData()
-    // }
-
-    // loadData() {
-    //     firebase.database().ref(`/users`)
-    //         .child(firebase.auth().currentUser.uid)
-    //         .child('box')
-    //         .on('value', res => {
-    //             this.setState({ box: res._value != null ? res._value : [] })
-    //         })
-    // }
 
     addWord = () => {
         if (this.state.word == '' || this.state.mean == '') {

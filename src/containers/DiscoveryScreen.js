@@ -5,48 +5,36 @@ import {
 } from 'react-native';
 import FindTitle from '../components/FindTitle';
 import PickLanguage from '../components/PickLanguage';
-import TopicDiscovery from '../components/TopicDiscovery';
+import firebase from 'react-native-firebase';
 
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Topic from '../components/Topic';
 
-const data = [
-    {
-        language: 'English',
-        title: 'animal'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
-    {
-        language: 'Japanese',
-        title: 'gain'
-    },
-    {
-        language: 'Tuckey',
-        title: 'sport'
-    },
-
-]
 
 class DiscoveryScreen extends Component {
-    state = {}
+    state = {
+        box: []
+    }
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        this.props.navigation.getParam('listUserUid').map(item =>
+            firebase.database().ref(`/users`)
+                .child(item)
+                .child('box')
+                .on('value', res => {
+                    this.setState({ box: res._value != null ? this.state.box.concat(res._value) : this.state.box })
+                })
+        )
+    }
 
     renderItem = (data) => {
-        return <TopicDiscovery
+        return <Topic
+            screen={'Discovery'}
             item={data.item}
             navigation={this.props.navigation} />
     }
@@ -58,7 +46,7 @@ class DiscoveryScreen extends Component {
                 <PickLanguage />
                 <FlatList
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.60 }}
-                    data={data}
+                    data={this.state.box}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />

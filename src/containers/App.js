@@ -4,12 +4,12 @@ import {
   View,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase'
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from '../reducers'
-
 
 import LoginScreen from './LoginScreen';
 import SplashScreen from './SplashScreen'
@@ -61,8 +61,11 @@ const Navigation = createStackNavigator({
         fontSize: 20,
         fontWeight: 'bold',
         color: primaryColorCore
-
       },
+      headerLeft:
+        <TouchableOpacity onPress={() => navigation.navigate('FirstScreen')}>
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={25} />
+        </TouchableOpacity>
     })
   },
   AddCard: {
@@ -73,10 +76,8 @@ const Navigation = createStackNavigator({
       headerTitleStyle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: primaryColorCore
-
+        color: primaryColorCore,
       },
-
     })
   },
   OwnCard: {
@@ -87,9 +88,13 @@ const Navigation = createStackNavigator({
       headerTitleStyle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: primaryColorCore
+        color: primaryColorCore,
 
       },
+      headerLeft:
+        <TouchableOpacity onPress={() => navigation.navigate('Topics')}>
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={25} />
+        </TouchableOpacity>
     })
   },
   Learn: {
