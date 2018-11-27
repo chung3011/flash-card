@@ -6,11 +6,35 @@ import {
 import FlipCard from 'react-native-flip-card'
 import { primaryColorCore } from '../style';
 
+import firebase from 'react-native-firebase';
 
 class Flip extends Component {
     state = {
-        status: false
+        status: this.props.item.status
     }
+
+    componentDidMount() {
+        this.props.topic.words.map(item => item.word == this.props.item.word
+            ? item.status = this.state.status
+            : item)
+    }
+
+    componentWillUnmount() {
+        firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .child(`${this.props.box.findIndex(topic => topic.title == this.props.topic.title)}`)
+            .child('words')
+            .child(`${this.props.topic.words.findIndex(item => item.word == this.props.item.word)}`)
+            .update({
+                status: this.state.status
+            })
+    }
+
+    memorizedButton = () => {
+        this.setState({ status: !this.state.status })
+    }
+
     render() {
         return (
             <View style={styles.slide1}>
@@ -32,29 +56,27 @@ class Flip extends Component {
                         <Text style={styles.text} >{this.props.item.word}</Text>
                         <TouchableOpacity
                             style={[
-                                styles.remembered,
+                                styles.memorized,
                                 {
-                                    backgroundColor: this.state.status ? primaryColorCore : 'gray',
-                                    borderColor: this.state.status ? primaryColorCore : 'gray'
+                                    backgroundColor: this.state.status ? primaryColorCore : 'gray'
 
                                 }]}
-                            onPress={() => this.setState({ status: !this.state.status })}
+                            onPress={this.memorizedButton}
                         >
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>Remembered</Text>
+                            <Text style={{ color: 'white', fontWeight: 'bold' }}>Memorized</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.face}>
                         <Text style={styles.meanText} >{this.props.item.mean}</Text>
                         <TouchableOpacity
                             style={[
-                                styles.remembered,
+                                styles.memorized,
                                 {
-                                    backgroundColor: this.state.status ? primaryColorCore : 'gray',
-                                    borderColor: this.state.status ? primaryColorCore : 'gray'
+                                    backgroundColor: this.state.status ? primaryColorCore : 'gray'
                                 }]}
-                            onPress={() => this.setState({ status: !this.state.status })}
+                            onPress={this.memorizedButton}
                         >
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>Remembered</Text>
+                            <Text style={{ color: 'white', fontWeight: 'bold' }}>Memorized</Text>
                         </TouchableOpacity>
                     </View>
                 </FlipCard>
@@ -96,11 +118,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
     },
-    remembered: {
+    memorized: {
         borderRadius: 5,
         width: 100,
         height: 50,
-        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 60,

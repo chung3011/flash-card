@@ -3,20 +3,37 @@ import {
     Text, Picker,
     View, Dimensions, StyleSheet, FlatList
 } from 'react-native';
-import firebase from 'react-native-firebase';
 
 import Swiper from 'react-native-swiper';
 import Flip from './Flip'
 
-
+import firebase from 'react-native-firebase';
 
 class Card extends Component {
     state = {
-        box: []
+        box: [],
     }
 
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                this.setState({ box: res._value != null ? res._value : [] })
+            })
+    }
+
+
     renderItem = (data) => {
-        return <Flip item={data.item} />
+        return <Flip
+            item={data.item}
+            topic={this.props.topic}
+            box={this.state.box}
+        />
     }
 
     render() {

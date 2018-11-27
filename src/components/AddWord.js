@@ -8,32 +8,39 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { connect } from 'react-redux'
 import { addWord } from '../actions'
-import firebase from 'react-native-firebase';
+// import firebase from 'react-native-firebase';
 
 class AddWord extends Component {
-    state = {}
-
-    componentDidMount() {
-        this.loadData()
+    state = {
+        word: '',
+        mean: ''
     }
 
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .on('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
-    }
+    // componentDidMount() {
+    //     this.loadData()
+    // }
+
+    // loadData() {
+    //     firebase.database().ref(`/users`)
+    //         .child(firebase.auth().currentUser.uid)
+    //         .child('box')
+    //         .on('value', res => {
+    //             this.setState({ box: res._value != null ? res._value : [] })
+    //         })
+    // }
 
     addWord = () => {
-        let wordExist = this.props.topic.filter(item => item.word == this.state.word)
+        if (this.state.word == '' || this.state.mean == '') {
+            return Alert.alert('This word blank')
+        }
+        let wordExist = this.props.words.filter(item => item.word == this.state.word)
         if (wordExist.length !== 0) {
             return Alert.alert('This word exist')
         }
         this.props.addWord({
             word: this.state.word,
-            mean: this.state.mean
+            mean: this.state.mean,
+            status: false
         })
         this.setState({
             word: '',
@@ -96,5 +103,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ topic }) => ({ topic })
-export default connect(mapStateToProps, { addWord })(AddWord);
+
+export default connect(null, { addWord })(AddWord);

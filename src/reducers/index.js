@@ -3,5 +3,5 @@ import wordsReducer from './wordsReducer';
 
 
 export default combineReducers({
-    topic: wordsReducer
+    words: wordsReducer
 })

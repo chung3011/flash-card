@@ -14,7 +14,7 @@ class Word extends Component {
         <WordOneSide
           side={'left'}
           text={this.props.item.word}
-          remembered={this.props.item.remembered}
+          status={this.props.item.status}
           screen={this.props.screen}
         />
         <WordOneSide side={'right'} text={this.props.item.mean} />
