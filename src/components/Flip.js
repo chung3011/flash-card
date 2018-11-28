@@ -13,13 +13,7 @@ class Flip extends Component {
         status: this.props.item.status
     }
 
-    componentDidMount() {
-        this.props.topic.words.map(item => item.word == this.props.item.word
-            ? item.status = this.state.status
-            : item)
-    }
-
-    componentWillUnmount() {
+    memorizedButton = () => {
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
             .child('box')
@@ -27,13 +21,11 @@ class Flip extends Component {
             .child('words')
             .child(`${this.props.topic.words.findIndex(item => item.word == this.props.item.word)}`)
             .update({
-                status: this.state.status
+                status: !this.state.status
             })
-    }
-
-    memorizedButton = () => {
         this.setState({ status: !this.state.status })
     }
+
 
     render() {
         return (

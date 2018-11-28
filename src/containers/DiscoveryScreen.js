@@ -10,6 +10,7 @@ import firebase from 'react-native-firebase';
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Topic from '../components/Topic';
+import TopicDiscovery from '../components/TopicDiscovery';
 
 
 class DiscoveryScreen extends Component {
@@ -33,8 +34,7 @@ class DiscoveryScreen extends Component {
     }
 
     renderItem = (data) => {
-        return <Topic
-            screen={'Discovery'}
+        return <TopicDiscovery
             item={data.item}
             navigation={this.props.navigation} />
     }

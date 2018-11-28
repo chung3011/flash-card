@@ -19,29 +19,38 @@ class FirstScreen extends Component {
         this.saveUserUid()
     }
 
+    componentWillUnmount() {
+
+    }
+
     loadData() {
         firebase.database().ref(`/users`)
             .child(firebase.auth().currentUser.uid)
             .once('value', res => {
                 this.setState({
-                    name: res._value.name,
+                    name: res._value.name == null ? '' : res._value.name,
                     boxLength: res._value.box == null ? 0 : res._value.box.length
                 })
             })
-        firebase.database().ref(`/users`)
-            .child('userUid')
+        firebase.database().ref(`/usersUid`)
             .once('value', res => {
                 this.setState({
-                    listUserUid: res._value == null ? [] : res._value
+                    listUserUid: res._value == null ? 0 : res._value
                 })
             })
     }
 
     saveUserUid() {
         this.state.listUserUid.unshift(firebase.auth().currentUser.uid)
-        firebase.database().ref(`/users`)
-            .child('userUid')
+        firebase.database().ref(`/usersUid`)
             .set(this.state.listUserUid)
+    }
+
+    onSubmit = (event) => {
+        firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('name')
+            .set(event.nativeEvent.text)
     }
 
     signOut = () => { firebase.auth().signOut() }
@@ -56,8 +65,11 @@ class FirstScreen extends Component {
                         underlineColorAndroid={'rgba(0,0,0,0)'}
                         placeholder={'Enter your name'}
                         style={{ fontSize: 20, textAlign: 'center', width: 160 }}
-                    >
-                        {this.state.name}</TextInput>
+                        returnKeyType={'done'}
+                        onSubmitEditing={this.onSubmit.bind(this)}
+                        defaultValue={this.state.name}
+                    />
+                    {/* {this.state.name}</TextInput> */}
 
                     <Text style={styles.text1} >Number of Box</Text>
                     <Text style={styles.text2}>{this.state.boxLength}</Text>
