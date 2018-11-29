@@ -14,7 +14,9 @@ import { addWords, cleanWord } from '../actions'
 import firebase from 'react-native-firebase';
 
 class OwnCardScreen extends Component {
-    state = {}
+    state = {
+        wordFilter: []
+    }
 
     componentDidMount() {
         this.props.addWords({
@@ -56,6 +58,13 @@ class OwnCardScreen extends Component {
         </View>
     )
 
+    _searchWord = (text) => {
+        this.setState({
+            text: text,
+            wordFilter: this.props.words.filter(item => item.word == text)
+        })
+    }
+
     renderSearch = () => (
         <View style={{
             width: Dimensions.get("window").width * 0.6,
@@ -66,10 +75,10 @@ class OwnCardScreen extends Component {
             <TextInput
                 style={[styles.title, { flex: 1, }]}
                 placeholder={'Search'}
-                onChangeText={(text) => this.setState({ text })}
+                onChangeText={(text) => this._searchWord(text)}
+                value={this.state.text}
                 underlineColorAndroid={'transparent'}
-            >
-            </TextInput>
+            />
             <TouchableOpacity style={{ marginTop: 8 }} >
                 <Icon name="question-circle" size={40} color={primaryColorCore} />
             </TouchableOpacity>
@@ -141,7 +150,7 @@ class OwnCardScreen extends Component {
                 <View style={{ height: Dimensions.get("window").height * 0.36, alignItems: 'center' }}>
                     <FlatList
                         style={{ flexGrow: 0 }}
-                        data={this.props.words}
+                        data={this.state.wordFilter.length == 0 ? this.props.words : this.state.wordFilter}
                         renderItem={this.renderList}
                         keyExtractor={item => item.toString()}
                     />
@@ -183,7 +192,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColorCore,
         borderRadius: 15,
         elevation: 2,
-        marginTop:20
+        marginTop: 20
     },
     textButton: {
         color: 'white',

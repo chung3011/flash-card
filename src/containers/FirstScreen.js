@@ -10,30 +10,29 @@ import MyCardScreen from './MyCardScreen';
 
 class FirstScreen extends Component {
     state = {
-        name: '______',
+        name: '',
+        box: 0,
+        boxLike: [],
         listUserUid: []
     }
 
     componentDidMount() {
         this.loadData()
-        this.saveUserUid()
     }
 
-    componentWillUnmount() {
-
-    }
 
     loadData() {
         firebase.database().ref(`/users`)
             .child(firebase.auth().currentUser.uid)
-            .once('value', res => {
+            .on('value', res => {
                 this.setState({
-                    name: res._value.name == null ? '' : res._value.name,
-                    boxLength: res._value.box == null ? 0 : res._value.box.length
+                    name: res._value == null ? '' : res._value.name,
+                    box: res._value == null ? null : res._value.box,
+                    boxLike: res._value == null ? [] : res._value.box
                 })
             })
         firebase.database().ref(`/usersUid`)
-            .once('value', res => {
+            .on('value', res => {
                 this.setState({
                     listUserUid: res._value == null ? 0 : res._value
                 })
@@ -44,6 +43,19 @@ class FirstScreen extends Component {
         this.state.listUserUid.unshift(firebase.auth().currentUser.uid)
         firebase.database().ref(`/usersUid`)
             .set(this.state.listUserUid)
+    }
+
+    like = () => {
+        let myTopics = this.state.boxLike.filter(item => item.userUid == firebase.auth().currentUser.uid)
+        let result = []
+        myTopics = myTopics.map(item => result = result.concat(item.like == null ? [] : item.like))
+        return result.length
+    }
+
+    _onPressTopics = () => {
+        let check = this.state.listUserUid.filter(item => item == firebase.auth().currentUser.uid)
+        check.length == 0 && this.saveUserUid()
+        this.props.navigation.navigate('Topics')
     }
 
     onSubmit = (event) => {
@@ -72,15 +84,15 @@ class FirstScreen extends Component {
                     {/* {this.state.name}</TextInput> */}
 
                     <Text style={styles.text1} >Number of Box</Text>
-                    <Text style={styles.text2}>{this.state.boxLength}</Text>
+                    <Text style={styles.text2}>{this.state.box == null ? 0 : this.state.box.length}</Text>
                     <Text style={styles.text1} >Like</Text>
-                    <Text style={styles.text2}>________</Text>
+                    <Text style={styles.text2}>{this.like()}</Text>
                 </View>
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 15, width: Dimensions.get("window").width * 0.7 }}>
                         <TouchableOpacity
                             style={styles.box}
-                            onPress={() => this.props.navigation.navigate('Topics')}
+                            onPress={this._onPressTopics}
                         >
                             <Icon name="user" size={20} color={'white'} />
                         </TouchableOpacity>

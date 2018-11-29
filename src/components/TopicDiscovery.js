@@ -1,13 +1,48 @@
 import React, { Component } from 'react';
 import {
     Text, StyleSheet, Dimensions,
-    View, TouchableOpacity,
+    View, TouchableOpacity, Alert
 } from 'react-native';
 import { primaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import firebase from 'react-native-firebase';
 
 class TopicDiscovery extends Component {
     state = {}
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                this.setState({ box: res._value != null ? res._value : [] })
+            })
+    }
+
+    addCard = () => {
+        let titleExist = this.state.box.filter(item => item.title == this.props.item.title)
+        if (titleExist.length !== 0) {
+            return Alert.alert('Title exist!')
+        }
+        this.state.box.unshift({
+            language: this.props.item.language,
+            learn: 0,
+            like: [],
+            point: 0,
+            title: this.props.item.title,
+            userUid: this.props.item.userUid,
+            words: this.props.item.words
+        })
+        firebase.database().ref('/users')
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .set(this.state.box)
+        Alert.alert('Add topic completed')
+    }
 
 
     render() {
@@ -22,7 +57,8 @@ class TopicDiscovery extends Component {
                 >
                     <View style={styles.header}>
                         <Text style={styles.language}>{this.props.item.language}</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.addCard}>
                             <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="plus-circle" size={27} color={'white'} />
                         </TouchableOpacity>
                     </View>
@@ -31,7 +67,7 @@ class TopicDiscovery extends Component {
                 <View style={styles.bottom}>
                     <View style={styles.flexRow}>
                         <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
-                        <Text style={{ width: 25 }}>{this.props.item.like}</Text>
+                        <Text style={{ width: 25 }}>{this.props.item.like == null ? 0 : this.props.item.like.length}</Text>
                     </View>
                 </View>
             </View>

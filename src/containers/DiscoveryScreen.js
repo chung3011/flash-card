@@ -15,7 +15,8 @@ import TopicDiscovery from '../components/TopicDiscovery';
 
 class DiscoveryScreen extends Component {
     state = {
-        box: []
+        box: [],
+        boxFilter: []
     }
 
     componentDidMount() {
@@ -28,7 +29,10 @@ class DiscoveryScreen extends Component {
                 .child(item)
                 .child('box')
                 .on('value', res => {
-                    this.setState({ box: res._value != null ? this.state.box.concat(res._value) : this.state.box })
+                    this.setState({
+                        box: res._value != null ? this.state.box.concat(res._value) : this.state.box,
+                        boxFilter: res._value != null ? this.state.box.concat(res._value) : this.state.box
+                    })
                 })
         )
     }
@@ -39,14 +43,30 @@ class DiscoveryScreen extends Component {
             navigation={this.props.navigation} />
     }
 
+    handleFindTitle = (titleValue) => {
+        let boxFilter = this.state.box.filter(item => item.title == titleValue)
+        this.setState({ boxFilter: boxFilter.length == 0 ? this.state.box : boxFilter });
+    }
+
+    handleLanguage = (langValue) => {
+        let boxLanguageFilter = this.state.box.filter(item => item.language == langValue)
+        this.setState({
+            lang: langValue,
+            boxFilter: boxLanguageFilter
+        });
+    }
+
     render() {
         return (
             <View>
-                <FindTitle />
-                <PickLanguage />
+                <FindTitle onSelectTitle={this.handleFindTitle} />
+                <PickLanguage
+                    onSelectLanguage={this.handleLanguage}
+                    screen={"find"}
+                />
                 <FlatList
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.60 }}
-                    data={this.state.box}
+                    data={this.state.boxFilter}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />

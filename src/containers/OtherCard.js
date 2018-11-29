@@ -3,6 +3,9 @@ import {
     Text, TextInput, StyleSheet,
     View, TouchableOpacity, Dimensions, FlatList
 } from 'react-native';
+
+import firebase from 'react-native-firebase';
+
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WordForm from './../components/WordForm'
@@ -10,7 +13,28 @@ import WordForm from './../components/WordForm'
 
 class OtherCard extends Component {
     state = {
-        isLike: false
+        isLike: this.props.navigation.getParam("topic").like == null
+            ? []
+            : this.props.navigation.getParam("topic").like.filter(item => item == firebase.auth().currentUser.uid),
+        box: [],
+        listLike: this.props.navigation.getParam("topic").like == null
+            ? []
+            : this.props.navigation.getParam("topic").like
+    }
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        firebase.database().ref(`/users`)
+            .child(this.props.navigation.getParam("topic").userUid)
+            .child('box')
+            .once('value', res => {
+                this.setState({
+                    box: res._value != null ? res._value : [],
+                })
+            })
     }
 
     renderTitle = () => (
@@ -36,6 +60,33 @@ class OtherCard extends Component {
         </TouchableOpacity>
     )
 
+    _onPressLike = () => {
+        if (this.state.isLike.length == 0) {
+            this.state.listLike.unshift(firebase.auth().currentUser.uid)
+            firebase.database().ref('/users')
+                .child(this.props.navigation.getParam("topic").userUid)
+                .child('box')
+                .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title
+                    && topic.userUid == this.props.navigation.getParam("topic").userUid)}`)
+                .update({
+                    like: this.state.listLike
+                })
+            this.setState({ isLike: [1] })
+        } else {
+            let index = this.state.listLike.indexOf(firebase.auth().currentUser.uid)
+            this.state.listLike.splice(index, 1)
+            firebase.database().ref('/users')
+                .child(this.props.navigation.getParam("topic").userUid)
+                .child('box')
+                .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title
+                    && topic.userUid == this.props.navigation.getParam("topic").userUid)}`)
+                .update({
+                    like: this.state.listLike
+                })
+            this.setState({ isLike: [] })
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -43,9 +94,13 @@ class OtherCard extends Component {
                 {this.renderLanguage()}
                 <TouchableOpacity
                     style={{ marginVertical: 15, flexDirection: 'row' }}
-                    onPress={() => this.setState({ isLike: !this.state.isLike })}>
-                    <Icon name="heart" size={20} style={{ color: this.state.isLike ? primaryColorCore : 'gray' }} />
-                    <Text style={{ marginHorizontal: 9 }}>9</Text>
+                    onPress={this._onPressLike}>
+                    <Icon name="heart" size={20} style={{ color: this.state.isLike.length != 0 ? primaryColorCore : 'gray' }} />
+                    <Text style={{ marginHorizontal: 9 }}>
+                        {this.props.navigation.getParam("topic").like == null
+                            ? 0
+                            : this.state.listLike.length}
+                    </Text>
                 </TouchableOpacity>
                 <FlatList
                     style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.45, width: Dimensions.get("window").width * 0.95 }}

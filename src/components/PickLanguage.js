@@ -23,17 +23,33 @@ class PickLanguage extends Component {
                 borderRadius: 5,
                 borderColor: secondaryColorCore
             }}>
-                <Picker
-                    selectedValue={this.state.language}
-                    style={{
-                        height: 30,
-                        width: Dimensions.get("window").width - 60,
-                    }}
-                    onValueChange={(itemValue, itemIndex) => this.handleLangChange(itemValue)}>
-                    <Picker.Item label="English" value="English" />
-                    <Picker.Item label="Japanese" value="Japanese" />
-                    <Picker.Item label="Korean" value="Korean" />
-                </Picker>
+                {
+                    this.props.screen == "find"
+                        ? <Picker
+                            selectedValue={this.state.language}
+                            style={{
+                                height: 30,
+                                width: Dimensions.get("window").width - 60,
+                            }}
+                            onValueChange={(itemValue, itemIndex) => this.handleLangChange(itemValue)}>
+                            <Picker.Item label="All" value="All" />
+                            <Picker.Item label="English" value="English" />
+                            <Picker.Item label="Japanese" value="Japanese" />
+                            <Picker.Item label="Korean" value="Korean" />
+                        </Picker>
+                        : <Picker
+                            selectedValue={this.state.language}
+                            style={{
+                                height: 30,
+                                width: Dimensions.get("window").width - 60,
+                            }}
+                            onValueChange={(itemValue, itemIndex) => this.handleLangChange(itemValue)}>
+                            <Picker.Item label="English" value="English" />
+                            <Picker.Item label="Japanese" value="Japanese" />
+                            <Picker.Item label="Korean" value="Korean" />
+                        </Picker>
+                }
+
             </View>
         );
     }

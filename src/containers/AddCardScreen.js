@@ -20,9 +20,6 @@ class AddCardScreen extends Component {
         box: [],
         title: '',
         language: 'English',
-        like: 0,
-        point: 0,
-        learn:0
     }
 
     componentDidMount() {
@@ -75,9 +72,10 @@ class AddCardScreen extends Component {
             language: this.state.language,
             title: this.state.title,
             words: this.props.words,
-            like: this.state.like,
-            point: this.state.point,
-            learn: this.state.learn
+            like: [],
+            point: 0,
+            learn: 0,
+            userUid: firebase.auth().currentUser.uid
         })
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
@@ -148,7 +146,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColorCore,
         borderRadius: 15,
         elevation: 2,
-        marginTop:20
+        marginTop: 20
     },
     textButton: {
         color: 'white',

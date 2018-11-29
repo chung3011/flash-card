@@ -8,6 +8,12 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 
 class FindTitle extends Component {
     state = {}
+
+    handleTitleChange = (itemValue) => {
+        this.setState({ text: itemValue })
+        this.props.onSelectTitle(itemValue);
+    }
+
     render() {
         return (
             <View>
@@ -21,6 +27,8 @@ class FindTitle extends Component {
                         marginHorizontal: 20
                     }}
                     placeholder={'Find title'}
+                    onChangeText={(text) => this.handleTitleChange(text)}
+                    value={this.state.text}
 
                     underlineColorAndroid={'transparent'}
                 />
