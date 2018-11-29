@@ -34,7 +34,7 @@ class Topic extends Component {
         <View style={styles.bottom}>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
-            <Text style={{ width: 25 }}>{this.props.item.like}</Text>
+            <Text style={{ width: 25 }}>{this.props.item.like == null ? 0 : this.props.item.like.length}</Text>
           </View>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5, }} name="graduation-cap" size={17} />
