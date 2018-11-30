@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Text,
+    Text, ActivityIndicator,
     View, StyleSheet, Dimensions, TouchableOpacity, TextInput
 } from 'react-native';
 import { primaryColorCore, secondaryColorCore } from '../style';
@@ -13,7 +13,8 @@ class FirstScreen extends Component {
         name: '',
         box: 0,
         boxLike: [],
-        listUserUid: []
+        listUserUid: [],
+        isSignOut: false
     }
 
     componentDidMount() {
@@ -65,7 +66,10 @@ class FirstScreen extends Component {
             .set(event.nativeEvent.text)
     }
 
-    signOut = () => { firebase.auth().signOut() }
+    signOut = () => {
+        this.setState({isSignOut: true})
+        firebase.auth().signOut()
+    }
 
 
     render() {
@@ -81,7 +85,6 @@ class FirstScreen extends Component {
                         onSubmitEditing={this.onSubmit.bind(this)}
                         defaultValue={this.state.name}
                     />
-                    {/* {this.state.name}</TextInput> */}
 
                     <Text style={styles.text1} >Number of Box</Text>
                     <Text style={styles.text2}>{this.state.box == null ? 0 : this.state.box.length}</Text>
@@ -105,13 +108,16 @@ class FirstScreen extends Component {
                             <Icon name="users" size={20} color={'white'} />
                         </TouchableOpacity>
                     </View>
+                    {this.state.isSignOut
+                        ? <ActivityIndicator size="large" color={primaryColorCore} ></ActivityIndicator>
+                        : <TouchableOpacity
+                            style={styles.box}
+                            onPress={this.signOut}
+                        >
+                            <Icon name="sign-out" size={20} color={'white'} />
+                        </TouchableOpacity>
+                    }
 
-                    <TouchableOpacity
-                        style={styles.box}
-                        onPress={this.signOut}
-                    >
-                        <Icon name="sign-out" size={20} color={'white'} />
-                    </TouchableOpacity>
                 </View>
 
             </View>
