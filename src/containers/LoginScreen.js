@@ -29,7 +29,7 @@ class LoginScreen extends Component {
     )
 
     renderLogin = () => (
-        <View style={{flex:2}}>
+        <View style={{ height: Dimensions.get("window").height * 0.2 }}>
             <View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="user" size={20} color={secondaryColorCore} style={{ marginStart: 10 }} />
@@ -131,7 +131,7 @@ class LoginScreen extends Component {
         </View>
     )
     renderError = () => (
-        <Text style={{ color: primaryColorCore }} style={{flex:0.1}}>{this.state.err}</Text>
+        <Text style={{ color: primaryColorCore, height: 15 }} >{this.state.err}</Text>
     )
     render() {
         return (
@@ -139,7 +139,7 @@ class LoginScreen extends Component {
                 {this.renderLogo()}
                 {this.renderLogin()}
                 {this.renderError()}
-                <View style={{ flexDirection: 'row' , justifyContent:'space-around', flex:3}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     {this.state.isSigningUp
                         ? <ActivityIndicator size="large" color={primaryColorCore} ></ActivityIndicator>
                         : <View>{this.renderSignUp()}</View>
@@ -150,7 +150,7 @@ class LoginScreen extends Component {
                     }
 
                 </View>
- 
+
             </View>
         );
     }
@@ -165,10 +165,10 @@ const styles = StyleSheet.create({
     logoStyleView: {
         alignItems: 'center',
         justifyContent: 'center',
-        flex:6
+        height: Dimensions.get("window").height * 0.5
     },
     imgStyle: {
-        height: Dimensions.get("window").width * 0.8,
+        height: Dimensions.get("window").width,
         width: Dimensions.get("window").width
     },
     loginImg: {
@@ -181,7 +181,6 @@ const styles = StyleSheet.create({
         marginStart: 10
     },
     buttonStyle: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
