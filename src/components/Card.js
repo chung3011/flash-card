@@ -43,7 +43,11 @@ class Card extends Component {
                 height: Dimensions.get("window").width,
                 marginVertical: 20
             }}>
-                <Swiper style={styles.wrapper} showsButtons={false} dotColor={'rgb(179, 179, 204)'} activeDotColor={'rgb(204, 0, 102)'}>
+                <Swiper
+                    style={styles.wrapper}
+                    showsButtons={false}
+                    dotColor={'rgb(179, 179, 204)'}
+                    activeDotColor={'rgb(204, 0, 102)'}>
                     <FlatList
                         style={{ flexGrow: 0 }}
                         data={this.props.topic.words}
@@ -59,21 +63,6 @@ class Card extends Component {
 }
 const styles = StyleSheet.create({
     wrapper: {
-    },
-    slide1: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    slide3: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     text: {
         color: 'rgb(204, 0, 102)',

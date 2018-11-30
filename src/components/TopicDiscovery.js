@@ -8,7 +8,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase';
 
 class TopicDiscovery extends Component {
-    state = {}
+    state = {
+        myLike: [],
+    }
 
     componentDidMount() {
         this.loadData()
@@ -24,16 +26,18 @@ class TopicDiscovery extends Component {
     }
 
     addCard = () => {
-        let titleExist = this.state.box.filter(item => item.title == this.props.item.title)
-        if (titleExist.length !== 0) {
-            return Alert.alert('Title exist!')
+        let topicExist = this.state.box.filter(item => item.dateUserAuth == this.props.item.date
+            && item.userUid == this.props.item.userUid)
+        if (topicExist.length !== 0) {
+            return Alert.alert('Topic added!')
         }
         this.state.box.unshift({
             language: this.props.item.language,
             learn: 0,
-            like: [],
             point: 0,
+            date: Date.now(),
             title: this.props.item.title,
+            dateUserAuth: this.props.item.date,
             userUid: this.props.item.userUid,
             words: this.props.item.words
         })
@@ -44,6 +48,17 @@ class TopicDiscovery extends Component {
         Alert.alert('Add topic completed')
     }
 
+    // handleUpdateMyLike = (myLikeValue) => {
+    //     this.setState({ myLike: myLikeValue });
+    // }
+
+    _onPressOwnCard = () => {
+        this.props.navigation.navigate('OtherCard', {
+            topic: this.props.item,
+        })
+        // this.props.onReloadBox()
+    }
+
 
     render() {
 
@@ -51,15 +66,15 @@ class TopicDiscovery extends Component {
             <View>
                 <TouchableOpacity
                     style={styles.container}
-                    onPress={() => this.props.navigation.navigate('OtherCard', {
-                        topic: this.props.item
-                    })}
+                    onPress={this._onPressOwnCard}
                 >
                     <View style={styles.header}>
                         <Text style={styles.language}>{this.props.item.language}</Text>
                         <TouchableOpacity
                             onPress={this.addCard}>
-                            <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="plus-circle" size={27} color={'white'} />
+                            <Icon
+                                style={{ marginEnd: 5, alignSelf: 'flex-end' }}
+                                name="plus-circle" size={27} color={'white'} />
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.topic}>{this.props.item.title}</Text>
@@ -67,7 +82,11 @@ class TopicDiscovery extends Component {
                 <View style={styles.bottom}>
                     <View style={styles.flexRow}>
                         <Icon style={{ marginEnd: 5 }} name="heart" size={17} />
-                        <Text style={{ width: 25 }}>{this.props.item.like == null ? 0 : this.props.item.like.length}</Text>
+                        <Text style={{ width: 25 }}>
+                            {this.props.item.like == null
+                                ? 0
+                                : this.props.item.like.length + this.state.myLike.length}
+                        </Text>
                     </View>
                 </View>
             </View>

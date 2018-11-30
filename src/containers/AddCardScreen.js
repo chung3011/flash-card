@@ -61,10 +61,6 @@ class AddCardScreen extends Component {
     )
 
     addCard = () => {
-        let titleExist = this.state.box.filter(item => item.title == this.state.title)
-        if (titleExist.length !== 0) {
-            return Alert.alert('Title exist!')
-        }
         if (this.props.words.length == 0) {
             return Alert.alert('Can not create topic without word!')
         }
@@ -72,9 +68,10 @@ class AddCardScreen extends Component {
             language: this.state.language,
             title: this.state.title,
             words: this.props.words,
-            like: [],
             point: 0,
             learn: 0,
+            auth: true,
+            date: Date.now(),
             userUid: firebase.auth().currentUser.uid
         })
         firebase.database().ref('/users')

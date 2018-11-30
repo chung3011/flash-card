@@ -61,31 +61,34 @@ class OtherCard extends Component {
     )
 
     _onPressLike = () => {
+        let indexTopic = this.state.box.findIndex(topic => topic.date == this.props.navigation.getParam("topic").date
+            && topic.userUid == this.props.navigation.getParam("topic").userUid)
         if (this.state.isLike.length == 0) {
             this.state.listLike.unshift(firebase.auth().currentUser.uid)
             firebase.database().ref('/users')
                 .child(this.props.navigation.getParam("topic").userUid)
                 .child('box')
-                .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title
-                    && topic.userUid == this.props.navigation.getParam("topic").userUid)}`)
+                .child(`${indexTopic}`)
                 .update({
-                    like: this.state.listLike
+                    like: indexTopic == -1 ? null : this.state.listLike
                 })
             this.setState({ isLike: [1] })
+            // this.props.navigation.getParam("onOffMyLike")(this.state.isLike)
         } else {
             let index = this.state.listLike.indexOf(firebase.auth().currentUser.uid)
             this.state.listLike.splice(index, 1)
             firebase.database().ref('/users')
                 .child(this.props.navigation.getParam("topic").userUid)
                 .child('box')
-                .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title
-                    && topic.userUid == this.props.navigation.getParam("topic").userUid)}`)
+                .child(`${indexTopic}`)
                 .update({
-                    like: this.state.listLike
+                    like: indexTopic == -1 ? null : this.state.listLike
                 })
             this.setState({ isLike: [] })
+            // this.props.navigation.getParam("onOffMyLike")(this.state.isLike)
         }
     }
+
 
     render() {
         return (
@@ -95,15 +98,20 @@ class OtherCard extends Component {
                 <TouchableOpacity
                     style={{ marginVertical: 15, flexDirection: 'row' }}
                     onPress={this._onPressLike}>
-                    <Icon name="heart" size={20} style={{ color: this.state.isLike.length != 0 ? primaryColorCore : 'gray' }} />
+                    <Icon name="heart" size={20}
+                        style={{ color: this.state.isLike.length != 0 ? primaryColorCore : 'gray' }} />
                     <Text style={{ marginHorizontal: 9 }}>
-                        {this.props.navigation.getParam("topic").like == null
+                        {this.state.listLike == null
                             ? 0
                             : this.state.listLike.length}
                     </Text>
                 </TouchableOpacity>
                 <FlatList
-                    style={{ flexGrow: 0, height: Dimensions.get("window").height * 0.45, width: Dimensions.get("window").width * 0.95 }}
+                    style={{
+                        flexGrow: 0,
+                        height: Dimensions.get("window").height * 0.45,
+                        width: Dimensions.get("window").width * 0.95
+                    }}
                     data={this.props.navigation.getParam("topic").words}
                     renderItem={this.renderList}
                     keyExtractor={item => item.toString()}

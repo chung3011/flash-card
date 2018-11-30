@@ -28,10 +28,14 @@ class DiscoveryScreen extends Component {
             firebase.database().ref(`/users`)
                 .child(item)
                 .child('box')
-                .on('value', res => {
+                .once('value', res => {
                     this.setState({
-                        box: res._value != null ? this.state.box.concat(res._value) : this.state.box,
-                        boxFilter: res._value != null ? this.state.box.concat(res._value) : this.state.box
+                        box: res._value != null
+                            ? this.state.box.concat(res._value).filter(item => item.auth == true)
+                            : this.state.box,
+                        boxFilter: res._value != null
+                            ? this.state.box.concat(res._value).filter(item => item.auth == true)
+                            : this.state.box
                     })
                 })
         )
@@ -40,7 +44,9 @@ class DiscoveryScreen extends Component {
     renderItem = (data) => {
         return <TopicDiscovery
             item={data.item}
-            navigation={this.props.navigation} />
+            navigation={this.props.navigation}
+        // onReloadBox={this.handleReloadBox}
+        />
     }
 
     handleFindTitle = (titleValue) => {
@@ -51,10 +57,16 @@ class DiscoveryScreen extends Component {
     handleLanguage = (langValue) => {
         let boxLanguageFilter = this.state.box.filter(item => item.language == langValue)
         this.setState({
-            lang: langValue,
-            boxFilter: boxLanguageFilter
+            boxFilter: langValue == 'All' ? this.state.box : boxLanguageFilter
         });
     }
+
+    // handleReloadBox = () => {
+    //     this.setState({
+    //         box: [],
+    //         boxFilter: []
+    //     });
+    // }
 
     render() {
         return (
