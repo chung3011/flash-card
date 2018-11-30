@@ -32,7 +32,7 @@ class FirstScreen extends Component {
                 })
             })
         firebase.database().ref(`/usersUid`)
-            .on('value', res => {
+            .once('value', res => {
                 this.setState({
                     listUserUid: res._value == null ? 0 : res._value
                 })
@@ -55,7 +55,9 @@ class FirstScreen extends Component {
     _onPressTopics = () => {
         let check = this.state.listUserUid.filter(item => item == firebase.auth().currentUser.uid)
         check.length == 0 && this.saveUserUid()
-        this.props.navigation.navigate('Topics')
+        this.props.navigation.navigate('Topics', {
+            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
+        })
     }
 
     onSubmit = (event) => {

@@ -52,8 +52,7 @@ class MyCardScreen extends Component {
     handleLanguage = (langValue) => {
         let boxLanguageFilter = this.state.box.filter(item => item.language == langValue)
         this.setState({
-            lang: langValue,
-            boxFilter: boxLanguageFilter
+            boxFilter: langValue == 'All' ? this.state.box : boxLanguageFilter
         });
     }
 
@@ -72,7 +71,9 @@ class MyCardScreen extends Component {
                     keyExtractor={item => item.toString()}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Discovery')}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Discovery', {
+                        listUserUid: this.props.navigation.getParam('listUserUid')
+                    })}>
                         <Icon name="globe" size={40} color={secondaryColorCore} />
                     </TouchableOpacity>
 

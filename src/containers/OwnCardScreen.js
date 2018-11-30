@@ -39,7 +39,7 @@ class OwnCardScreen extends Component {
         !this.state.deleteBox && firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
             .child('box')
-            .child(`${this.state.box.findIndex(topic => topic.title == this.props.navigation.getParam("topic").title)}`)
+            .child(`${this.state.box.findIndex(topic => topic.date == this.props.navigation.getParam("topic").date)}`)
             .child('words')
             .set(this.props.words)
         this.props.cleanWord()
@@ -95,7 +95,11 @@ class OwnCardScreen extends Component {
         }}>
             <View style={{ marginHorizontal: 15, flexDirection: 'row' }}>
                 <Icon style={{ marginEnd: 5 }} name="heart" size={20} />
-                <Text style={{ marginLeft: 5 }}>{this.props.navigation.getParam("topic").like}</Text>
+                <Text style={{ marginLeft: 5 }}>
+                    {this.props.navigation.getParam("topic").like == null
+                        ? 0
+                        : this.props.navigation.getParam("topic").like.length}
+                </Text>
             </View>
             <View style={{ marginHorizontal: 15, flexDirection: 'row' }}>
                 <Icon style={{ marginEnd: 5 }} name="graduation-cap" size={20} />

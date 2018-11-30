@@ -17,7 +17,7 @@ class Flip extends Component {
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
             .child('box')
-            .child(`${this.props.box.findIndex(topic => topic.title == this.props.topic.title)}`)
+            .child(`${this.props.box.findIndex(topic => topic.date == this.props.topic.date)}`)
             .child('words')
             .child(`${this.props.topic.words.findIndex(item => item.word == this.props.item.word)}`)
             .update({
