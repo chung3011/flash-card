@@ -22,7 +22,7 @@ export default function (state = [], action) {
                 ? {
                     word: item.word,
                     mean: item.mean,
-                    status: !item.status
+                    status: action.payload.status
                 } : item)
 
         default:

@@ -34,7 +34,7 @@ class FirstScreen extends Component {
         firebase.database().ref(`/usersUid`)
             .once('value', res => {
                 this.setState({
-                    listUserUid: res._value == null ? 0 : res._value
+                    listUserUid: res._value == null ? [] : res._value
                 })
             })
     }

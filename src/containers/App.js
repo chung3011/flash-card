@@ -49,6 +49,7 @@ const Navigation = createStackNavigator({
           }}>
             Add Card
           </Text>
+          
         </TouchableOpacity >
     })
   },
@@ -147,7 +148,9 @@ const SwitchNavigation = createSwitchNavigator({
 const HandlerNavigation = createAppContainer(SwitchNavigation)
 
 class App extends Component {
-  state = {}
+  state = {
+    err: ""
+  }
 
   render() {
     return (

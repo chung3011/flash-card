@@ -25,6 +25,7 @@ class WordOneSide extends Component {
         this.setState({ status: !this.state.status })
         this.props.updateStatus({
             word: this.props.text,
+            status: this.state.status
         })
 
     }
