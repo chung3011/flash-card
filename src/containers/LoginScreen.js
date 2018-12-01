@@ -3,7 +3,7 @@ import {
     Text, TouchableOpacity,
     View,
     StyleSheet,
-    Image,
+    Image, ActivityIndicator,
     TextInput, Dimensions
 } from 'react-native';
 import firebase from 'react-native-firebase'
@@ -29,10 +29,10 @@ class LoginScreen extends Component {
     )
 
     renderLogin = () => (
-        <View>
+        <View style={{ height: Dimensions.get("window").height * 0.2 }}>
             <View>
                 <View style={{ flexDirection: 'row' }}>
-                    <Icon name="user" size={20} color={secondaryColorCore} style={{marginStart:10}}/>
+                    <Icon name="user" size={20} color={secondaryColorCore} style={{ marginStart: 10 }} />
                     <Text style={styles.txtInput}>Email</Text>
                 </View>
                 <TextInput
@@ -42,7 +42,7 @@ class LoginScreen extends Component {
             </View>
             <View style={{ marginTop: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Icon name="unlock-alt" size={20} color={secondaryColorCore} style={{marginStart:10}}/>
+                    <Icon name="unlock-alt" size={20} color={secondaryColorCore} style={{ marginStart: 10 }} />
                     <Text style={styles.txtInput}>Password</Text>
                 </View>
                 <TextInput
@@ -107,31 +107,31 @@ class LoginScreen extends Component {
     }
 
     renderSignUp = () => (
-        <View style={{ flexDirection: 'row' }}>
-            <View style={styles.buttonStyle}>
-                <TouchableOpacity
-                    style={[styles.button, { backgroundColor: primaryColorCore }]}
-                    onPress={this.onSignUp}
-                    loading={this.state.isSigningUp}
-                    loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
-                >
-                    <Text style={styles.textButton}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.buttonStyle}>
-                <TouchableOpacity
-                    style={[styles.button, { backgroundColor: secondaryColorCore }]}
-                    onPress={this.onSignIn}
-                    loading={this.state.isSigningIn}
-                    loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
-                >
-                    <Text style={styles.textButton}>Sign In</Text>
-                </TouchableOpacity>
-            </View>
+        <View style={styles.buttonStyle}>
+            <TouchableOpacity
+                style={[styles.button, { backgroundColor: primaryColorCore }]}
+                onPress={this.onSignUp}
+                loading={this.state.isSigningUp}
+                loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
+            >
+                <Text style={styles.textButton}>Sign Up</Text>
+            </TouchableOpacity>
+        </View>
+    )
+    renderSignIn = () => (
+        <View style={styles.buttonStyle}>
+            <TouchableOpacity
+                style={[styles.button, { backgroundColor: secondaryColorCore }]}
+                onPress={this.onSignIn}
+                loading={this.state.isSigningIn}
+                loadingProps={{ size: 'large', color: 'rgb(236, 248, 246)' }}
+            >
+                <Text style={styles.textButton}>Sign In</Text>
+            </TouchableOpacity>
         </View>
     )
     renderError = () => (
-        <Text style={{ color: primaryColorCore }}>{this.state.err}</Text>
+        <Text style={{ color: primaryColorCore, height: 15 }} >{this.state.err}</Text>
     )
     render() {
         return (
@@ -139,7 +139,18 @@ class LoginScreen extends Component {
                 {this.renderLogo()}
                 {this.renderLogin()}
                 {this.renderError()}
-                {this.renderSignUp()}
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                    {this.state.isSigningUp
+                        ? <ActivityIndicator size="large" color={primaryColorCore} ></ActivityIndicator>
+                        : <View>{this.renderSignUp()}</View>
+                    }
+                    {this.state.isSigningIn
+                        ? <ActivityIndicator size="large" color={secondaryColorCore} ></ActivityIndicator>
+                        : <View>{this.renderSignIn()}</View>
+                    }
+
+                </View>
+
             </View>
         );
     }
@@ -154,9 +165,10 @@ const styles = StyleSheet.create({
     logoStyleView: {
         alignItems: 'center',
         justifyContent: 'center',
+        height: Dimensions.get("window").height * 0.5
     },
     imgStyle: {
-        height: Dimensions.get("window").width * 0.8,
+        height: Dimensions.get("window").width,
         width: Dimensions.get("window").width
     },
     loginImg: {
@@ -169,7 +181,6 @@ const styles = StyleSheet.create({
         marginStart: 10
     },
     buttonStyle: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
