@@ -9,7 +9,7 @@ import AddWord from '../components/AddWord'
 import Word from '../components/Word';
 
 import { connect } from 'react-redux'
-import { addWords, cleanWord } from '../actions'
+import { addWords, cleanWord, updateTopic, delTopic } from '../actions'
 
 import firebase from 'react-native-firebase';
 
@@ -22,26 +22,9 @@ class OwnCardScreen extends Component {
         this.props.addWords({
             words: this.props.navigation.getParam("topic").words
         })
-        this.loadData()
     }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .once('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
-    }
-
 
     componentWillUnmount() {
-        !this.state.deleteBox && firebase.database().ref('/users')
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .child(`${this.state.box.findIndex(topic => topic.date == this.props.navigation.getParam("topic").date)}`)
-            .child('words')
-            .set(this.props.words)
         this.props.cleanWord()
 
     }
@@ -113,29 +96,46 @@ class OwnCardScreen extends Component {
     )
 
     renderList = (data) => {
-        return <Word item={data.item} screen={'ownCard'} />
+        return <Word
+            item={data.item}
+            date={this.props.navigation.getParam("topic").date}
+            screen={'ownCard'} />
     }
 
     renderWord = () => (
         <AddWord words={this.props.words} />
     )
 
+    updateBox = () => {
+        this.props.updateTopic({
+            date: this.props.navigation.getParam("topic").date,
+            words: this.props.words
+        })
+        this.props.navigation.push('Topics')
+    }
+
+    renderUpdateButton = () => (
+        <TouchableOpacity
+            style={styles.updateButton}
+            onPress={this.updateBox}
+        >
+            <Text style={styles.textButton}>Update</Text>
+        </TouchableOpacity>
+    )
+
     deleteBox = () => {
-        let deleteBox = this.state.box.filter(item => item.title !== this.props.navigation.getParam("topic").title)
-        firebase.database().ref('/users')
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .set(deleteBox)
+        this.props.delTopic({
+            date: this.props.navigation.getParam("topic").date
+        })
         this.setState({ deleteBox: true })
-        this.props.navigation.navigate('Topics')
+        this.props.navigation.push('Topics')
     }
 
     renderDeleteButton = () => (
         <TouchableOpacity
-            style={styles.addButton}
+            style={styles.delButton}
             onPress={this.deleteBox}
         >
-            <Text style={styles.textButton}>Delete</Text>
             <Icon name="trash" size={30} color={'white'} />
         </TouchableOpacity>
     )
@@ -154,12 +154,15 @@ class OwnCardScreen extends Component {
                 <View style={{ height: Dimensions.get("window").height * 0.36, alignItems: 'center' }}>
                     <FlatList
                         style={{ flexGrow: 0 }}
-                        data={this.state.wordFilter.length == 0 ? this.props.words : this.state.wordFilter}
+                        data={this.state.wordFilter.length == 0
+                            ? this.props.words
+                            : this.state.wordFilter}
                         renderItem={this.renderList}
                         keyExtractor={item => item.toString()}
                     />
                 </View>
-                <View style={{ height: Dimensions.get("window").height * 0.1 }}>
+                <View style={{ height: Dimensions.get("window").height * 0.1, flexDirection: 'row' }}>
+                    {this.renderUpdateButton()}
                     {this.renderDeleteButton()}
                 </View>
 
@@ -186,8 +189,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'black'
     },
-    addButton: {
-        width: 200,
+    updateButton: {
+        width: 180,
         height: 50,
         alignSelf: 'center',
         flexDirection: 'row',
@@ -196,7 +199,21 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColorCore,
         borderRadius: 15,
         elevation: 2,
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 40
+    },
+    delButton: {
+        width: 40,
+        height: 40,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: 'gray',
+        borderRadius: 10,
+        elevation: 2,
+        marginTop: 20,
+        marginLeft: 20
     },
     textButton: {
         color: 'white',
@@ -205,5 +222,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ words }) => ({ words })
-export default connect(mapStateToProps, { addWords, cleanWord })(OwnCardScreen);
+const mapStateToProps = ({ words, box }) => ({ words, box })
+export default connect(mapStateToProps, { addWords, cleanWord, updateTopic, delTopic })(OwnCardScreen);

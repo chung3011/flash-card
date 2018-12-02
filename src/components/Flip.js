@@ -8,28 +8,27 @@ import { primaryColorCore } from '../style';
 
 import firebase from 'react-native-firebase';
 
+import { connect } from 'react-redux'
+import { updateStatusWordTopic } from '../actions'
+
 class Flip extends Component {
     state = {
         status: this.props.item.status
     }
 
     memorizedButton = () => {
-        firebase.database().ref('/users')
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .child(`${this.props.box.findIndex(topic => topic.date == this.props.topic.date)}`)
-            .child('words')
-            .child(`${this.props.topic.words.findIndex(item => item.word == this.props.item.word)}`)
-            .update({
-                status: !this.state.status
-            })
+        this.props.updateStatusWordTopic({
+            date: this.props.topic.date,
+            word: this.props.item.word,
+            status: !this.state.status
+        })
         this.setState({ status: !this.state.status })
     }
 
 
     render() {
         return (
-            <View style={styles.slide1}>
+            <View key={this.props.item.status} style={styles.slide1}>
                 <FlipCard
                     style={{
                         width: Dimensions.get("window").width - 30,
@@ -120,4 +119,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Flip;
+export default connect(null, { updateStatusWordTopic })(Flip);

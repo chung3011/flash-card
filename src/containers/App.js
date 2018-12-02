@@ -8,8 +8,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase'
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import rootReducer from '../reducers'
+// import { createStore } from 'redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from '../configureStore'
+// import rootReducer from '../reducers'
 
 import LoginScreen from './LoginScreen';
 import SplashScreen from './SplashScreen'
@@ -19,11 +21,12 @@ import AddCardScreen from './AddCardScreen';
 import LearnScreen from './LearnScreen'
 import DiscoveryScreen from './DiscoveryScreen';
 import OwnCardScreen from './OwnCardScreen';
-import OtherCard from './OtherCard'
+import OtherCard from './OtherCard';
 
 import { primaryColorCore, secondaryColorCore } from '../style';
 
-const store = createStore(rootReducer)
+// const store = createStore(rootReducer)
+const { store, persistor } = configureStore()
 
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
@@ -49,7 +52,6 @@ const Navigation = createStackNavigator({
           }}>
             Add Card
           </Text>
-          
         </TouchableOpacity >
     })
   },
@@ -65,7 +67,7 @@ const Navigation = createStackNavigator({
       },
       headerLeft:
         <TouchableOpacity onPress={() => navigation.navigate('FirstScreen')}>
-          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={25} />
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={20} />
         </TouchableOpacity>
     })
   },
@@ -90,11 +92,10 @@ const Navigation = createStackNavigator({
         fontSize: 20,
         fontWeight: 'bold',
         color: primaryColorCore,
-
       },
       headerLeft:
-        <TouchableOpacity onPress={() => navigation.navigate('Topics')}>
-          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={25} />
+        <TouchableOpacity onPress={() => navigation.push('Topics')}>
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={20} />
         </TouchableOpacity>
     })
   },
@@ -107,8 +108,11 @@ const Navigation = createStackNavigator({
         fontSize: 20,
         fontWeight: 'bold',
         color: primaryColorCore
-
       },
+      headerLeft:
+        <TouchableOpacity onPress={() => navigation.push('Topics')}>
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={20} />
+        </TouchableOpacity>
     })
   },
   Discovery: {
@@ -148,15 +152,14 @@ const SwitchNavigation = createSwitchNavigator({
 const HandlerNavigation = createAppContainer(SwitchNavigation)
 
 class App extends Component {
-  state = {
-    err: ""
-  }
+  state = {}
 
   render() {
     return (
-
       <Provider style={{ flex: 1 }} store={store}>
-        <HandlerNavigation />
+        <PersistGate loading={null} persistor={persistor}>
+          <HandlerNavigation />
+        </PersistGate>
       </Provider>
     );
   }

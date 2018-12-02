@@ -21,14 +21,14 @@ class WordOneSide extends Component {
         })
     }
 
-    updateStatus = () => {
-        this.setState({ status: !this.state.status })
-        this.props.updateStatus({
-            word: this.props.text,
-            status: this.state.status
-        })
+    // updateStatus = () => {
+    //     this.setState({ status: !this.state.status })
+    //     this.props.updateStatus({
+    //         word: this.props.text,
+    //         status: this.state.status
+    //     })
 
-    }
+    // }
 
     render() {
         return (
@@ -37,8 +37,8 @@ class WordOneSide extends Component {
                     && <View style={{ justifyContent: 'center', alignItems: 'center', width: 45 }}>
                         <CheckBox
                             size={27}
-                            checked={this.state.status}
-                            onPress={this.updateStatus}
+                            checked={this.props.status}
+                        // onPress={this.updateStatus}
                         />
                     </View>}
 

@@ -9,10 +9,11 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 
 import Word from '../components/Word';
 import AddWord from '../components/AddWord';
+import firebase from 'react-native-firebase'
+
 
 import { connect } from 'react-redux'
-import { cleanWord } from '../actions'
-import firebase from 'react-native-firebase';
+import { cleanWord, addTopic } from '../actions'
 
 
 class AddCardScreen extends Component {
@@ -20,19 +21,6 @@ class AddCardScreen extends Component {
         box: [],
         title: '',
         language: 'English',
-    }
-
-    componentDidMount() {
-        this.loadData()
-    }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .once('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
     }
 
     componentWillUnmount() {
@@ -64,20 +52,12 @@ class AddCardScreen extends Component {
         if (this.props.words.length == 0) {
             return Alert.alert('Can not create topic without word!')
         }
-        this.state.box.unshift({
+        this.props.addTopic({
             language: this.state.language,
             title: this.state.title,
             words: this.props.words,
-            point: 0,
-            learn: 0,
-            auth: true,
-            date: Date.now(),
             userUid: firebase.auth().currentUser.uid
         })
-        firebase.database().ref('/users')
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .set(this.state.box)
         this.props.cleanWord()
         this.props.navigation.navigate('Topics')
     }
@@ -152,5 +132,5 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ words }) => ({ words })
-export default connect(mapStateToProps, { cleanWord })(AddCardScreen);
+const mapStateToProps = ({ words, box }) => ({ words, box })
+export default connect(mapStateToProps, { cleanWord, addTopic })(AddCardScreen);

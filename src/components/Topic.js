@@ -18,14 +18,15 @@ class Topic extends Component {
           onPress={() => this.props.navigation.navigate('Learn', {
             topic: this.props.item,
           })}
-          onLongPress={() => this.props.navigation.navigate('OwnCard', {
-            topic: this.props.item
-          })}
         >
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
-            <TouchableOpacity>
-              <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="question-circle" size={27} color={'white'} />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('OwnCard', {
+                topic: this.props.item
+              })}
+            >
+              <Icon style={{ marginEnd: 5, alignSelf: 'flex-end' }} name="edit" size={27} color={'white'} />
 
             </TouchableOpacity>
           </View>

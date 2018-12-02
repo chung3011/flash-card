@@ -7,24 +7,13 @@ import {
 import Swiper from 'react-native-swiper';
 import Flip from './Flip'
 
+import { connect } from 'react-redux'
+import { updateTopic } from '../actions'
+
 import firebase from 'react-native-firebase';
 
 class Card extends Component {
     state = {
-        box: [],
-    }
-
-    componentDidMount() {
-        this.loadData()
-    }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .once('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
     }
 
 
@@ -32,7 +21,7 @@ class Card extends Component {
         return <Flip
             item={data.item}
             topic={this.props.topic}
-            box={this.state.box}
+            status={this.props.status}
         />
     }
 
@@ -50,7 +39,7 @@ class Card extends Component {
                     activeDotColor={'rgb(204, 0, 102)'}>
                     <FlatList
                         style={{ flexGrow: 0 }}
-                        data={this.props.topic.words}
+                        data={this.props.words}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.toString()}
                         horizontal={true}
@@ -81,4 +70,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Card;
+const mapStateToProps = ({ box }) => ({ box })
+export default connect(mapStateToProps)(Card);

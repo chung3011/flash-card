@@ -7,6 +7,8 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase'
 import MyCardScreen from './MyCardScreen';
+import { connect } from 'react-redux'
+import { addInfo } from '../actions'
 
 class FirstScreen extends Component {
     state = {
@@ -23,15 +25,15 @@ class FirstScreen extends Component {
 
 
     loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .on('value', res => {
-                this.setState({
-                    name: res._value == null ? '' : res._value.name,
-                    box: res._value == null ? null : res._value.box,
-                    boxLike: res._value == null ? [] : res._value.box
-                })
-            })
+        // firebase.database().ref(`/users`)
+        //     .child(firebase.auth().currentUser.uid)
+        //     .on('value', res => {
+        //         this.setState({
+        //             name: res._value == null ? '' : res._value.name,
+        //             box: res._value == null ? null : res._value.box,
+        //             boxLike: res._value == null ? [] : res._value.box
+        //         })
+        //     })
         firebase.database().ref(`/usersUid`)
             .once('value', res => {
                 this.setState({
@@ -54,14 +56,25 @@ class FirstScreen extends Component {
     }
 
     _onPressTopics = () => {
+        this.props.navigation.navigate('Topics', {
+            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid),
+            box: this.props.box
+        })
+    }
+
+    _onPressDiscovery = () => {
         let check = this.state.listUserUid.filter(item => item == firebase.auth().currentUser.uid)
         check.length == 0 && this.saveUserUid()
-        this.props.navigation.navigate('Topics', {
-            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
+        this.props.navigation.navigate('Discovery', {
+            listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid),
+            // box: this.props.box
         })
     }
 
     onSubmit = (event) => {
+        this.props.addInfo({
+            name: event.nativeEvent.text
+        })
         firebase.database().ref('/users')
             .child(firebase.auth().currentUser.uid)
             .child('name')
@@ -69,7 +82,7 @@ class FirstScreen extends Component {
     }
 
     signOut = () => {
-        this.setState({isSignOut: true})
+        this.setState({ isSignOut: true })
         firebase.auth().signOut()
     }
 
@@ -85,11 +98,11 @@ class FirstScreen extends Component {
                         style={{ fontSize: 20, textAlign: 'center', width: 160 }}
                         returnKeyType={'done'}
                         onSubmitEditing={this.onSubmit.bind(this)}
-                        defaultValue={this.state.name}
+                        defaultValue={this.props.info.name}
                     />
 
                     <Text style={styles.text1} >Number of Box</Text>
-                    <Text style={styles.text2}>{this.state.box == null ? 0 : this.state.box.length}</Text>
+                    <Text style={styles.text2}>{this.props.box.length}</Text>
                     <Text style={styles.text1} >Like</Text>
                     <Text style={styles.text2}>{this.like()}</Text>
                 </View>
@@ -103,9 +116,7 @@ class FirstScreen extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.box}
-                            onPress={() => this.props.navigation.navigate('Discovery', {
-                                listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid)
-                            })}
+                            onPress={this._onPressDiscovery}
                         >
                             <Icon name="users" size={20} color={'white'} />
                         </TouchableOpacity>
@@ -162,4 +173,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FirstScreen;
+const mapStateToProps = ({ box, info }) => ({ box, info })
+export default connect(mapStateToProps, { addInfo })(FirstScreen);

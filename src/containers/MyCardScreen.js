@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Text, FlatList,
+    Text, FlatList, StyleSheet,
     View, Dimensions, TouchableOpacity
 } from 'react-native';
 
@@ -11,30 +11,12 @@ import PickLanguage from '../components/PickLanguage';
 import Topic from '../components/Topic';
 import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { connect } from 'react-redux'
 
 
 class MyCardScreen extends Component {
     state = {
-        box: [],
-        boxFilter: []
-    }
-
-
-    componentDidMount() {
-        this.loadData()
-    }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .on('value', res => {
-                this.setState({
-                    box: res._value != null ? res._value : [],
-                    boxFilter: res._value != null ? res._value : [],
-                })
-            })
+        boxFilter: this.props.box,
     }
 
     renderItem = (data) => {
@@ -45,14 +27,14 @@ class MyCardScreen extends Component {
     }
 
     handleFindTitle = (titleValue) => {
-        let boxFilter = this.state.box.filter(item => item.title == titleValue)
-        this.setState({ boxFilter: boxFilter.length == 0 ? this.state.box : boxFilter });
+        let boxFilter = this.props.box.filter(item => item.title == titleValue)
+        this.setState({ boxFilter: boxFilter.length == 0 ? this.props.box : boxFilter });
     }
 
     handleLanguage = (langValue) => {
-        let boxLanguageFilter = this.state.box.filter(item => item.language == langValue)
+        let boxLanguageFilter = this.props.box.filter(item => item.language == langValue)
         this.setState({
-            boxFilter: langValue == 'All' ? this.state.box : boxLanguageFilter
+            boxFilter: langValue == 'All' ? this.props.box : boxLanguageFilter
         });
     }
 
@@ -70,7 +52,13 @@ class MyCardScreen extends Component {
                     renderItem={this.renderItem}
                     keyExtractor={item => item.toString()}
                 />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 20 }}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        marginVertical: 20,
+
+                    }}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Discovery', {
                         listUserUid: this.props.navigation.getParam('listUserUid')
                     })}>
@@ -86,4 +74,7 @@ class MyCardScreen extends Component {
         );
     }
 }
-export default MyCardScreen;
+
+
+const mapStateToProps = ({ box }) => ({ box })
+export default connect(mapStateToProps)(MyCardScreen);
