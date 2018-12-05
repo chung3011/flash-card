@@ -48,7 +48,7 @@ class LearnScreen extends Component {
                         width: Dimensions.get("window").width * 0.9,
                         borderColor: secondaryColorCore
                     }}>
-                    <Text style={{ fontSize: 18, color: 'black' }}>{this.props.navigation.getParam("topic").userUid}</Text>
+                    <Text style={{ fontSize: 18, color: 'black' }}>{this.props.navigation.getParam("topic").title}</Text>
                 </View>
                 <View style={{
                     marginVertical: 10,

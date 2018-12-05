@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase'
 import MyCardScreen from './MyCardScreen';
 import { connect } from 'react-redux'
-import { addInfo } from '../actions'
+import { addInfo, updateLikeAllBox, cleanAllTopic, cleanInfo, addAllTopic } from '../actions'
 
 class FirstScreen extends Component {
     state = {
@@ -25,15 +25,22 @@ class FirstScreen extends Component {
 
 
     loadData() {
-        // firebase.database().ref(`/users`)
-        //     .child(firebase.auth().currentUser.uid)
-        //     .on('value', res => {
-        //         this.setState({
-        //             name: res._value == null ? '' : res._value.name,
-        //             box: res._value == null ? null : res._value.box,
-        //             boxLike: res._value == null ? [] : res._value.box
-        //         })
-        //     })
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .on('value', res => {
+                res._value != null
+                    && res._value.map(item => this.props.box.filter(value => value.date == item.date).length == 0
+                        && this.props.updateLikeAllBox({
+                            date: item.date,
+                            like: item.like == null ? [] : item.like
+                        })
+                    )
+                this.props.addAllTopic({
+                    box: res._value == null ? [] : res._value
+                })
+
+            })
         firebase.database().ref(`/usersUid`)
             .once('value', res => {
                 this.setState({
@@ -49,7 +56,7 @@ class FirstScreen extends Component {
     }
 
     like = () => {
-        let myTopics = this.state.boxLike.filter(item => item.userUid == firebase.auth().currentUser.uid)
+        let myTopics = this.props.box.filter(item => item.userUid == firebase.auth().currentUser.uid)
         let result = []
         myTopics = myTopics.map(item => result = result.concat(item.like == null ? [] : item.like))
         return result.length
@@ -67,8 +74,12 @@ class FirstScreen extends Component {
         check.length == 0 && this.saveUserUid()
         this.props.navigation.navigate('Discovery', {
             listUserUid: this.state.listUserUid.filter(item => item !== firebase.auth().currentUser.uid),
-            // box: this.props.box
+            box: this.props.box
         })
+        firebase.database().ref(`/users`)
+            .child(firebase.auth().currentUser.uid)
+            .child('box')
+            .set(this.props.box)
     }
 
     onSubmit = (event) => {
@@ -82,6 +93,8 @@ class FirstScreen extends Component {
     }
 
     signOut = () => {
+        this.props.cleanInfo()
+        this.props.cleanAllTopic()
         this.setState({ isSignOut: true })
         firebase.auth().signOut()
     }
@@ -174,4 +187,4 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ box, info }) => ({ box, info })
-export default connect(mapStateToProps, { addInfo })(FirstScreen);
+export default connect(mapStateToProps, { addInfo, updateLikeAllBox, cleanAllTopic, cleanInfo, addAllTopic })(FirstScreen);

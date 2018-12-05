@@ -1,4 +1,10 @@
-import { ADD_WORD, DEL_WORD, CLEAN_WORD, ADD_WORDS, UPDATE_STATUS, ADD_TOPIC, DEL_TOPIC, UPDATE_TOPIC, UPDATE_STATUS_WORD_TOPIC, INFO } from "./style";
+import {
+    ADD_WORD, DEL_WORD, CLEAN_WORD, ADD_WORDS,
+    UPDATE_STATUS, ADD_TOPIC, DEL_TOPIC, UPDATE_TOPIC,
+    UPDATE_STATUS_WORD_TOPIC, INFO, UPDATE_LIKE_ALL_BOX,
+    CLEAN_TOPIC, CLEAN_ALL_TOPIC, CLEAN_INFO, ADD_INFO, ADD_ALL_TOPIC
+}
+    from "./style";
 
 export const addWord = (topic) => ({
     type: ADD_WORD,
@@ -25,6 +31,11 @@ export const updateStatus = (topic) => ({
     payload: topic
 })
 
+export const addAllTopic = (box) => ({
+    type: ADD_ALL_TOPIC,
+    payload: box
+})
+
 export const addTopic = (box) => ({
     type: ADD_TOPIC,
     payload: box
@@ -45,7 +56,22 @@ export const updateStatusWordTopic = (box) => ({
     payload: box
 })
 
+export const cleanAllTopic = (box) => ({
+    type: CLEAN_ALL_TOPIC,
+    payload: box
+})
+
+export const updateLikeAllBox = (box) => ({
+    type: UPDATE_LIKE_ALL_BOX,
+    payload: box
+})
+
 export const addInfo = (info) => ({
     type: ADD_INFO,
+    payload: info
+})
+
+export const cleanInfo = (info) => ({
+    type: CLEAN_INFO,
     payload: info
 })

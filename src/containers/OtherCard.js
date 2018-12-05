@@ -10,6 +10,9 @@ import { primaryColorCore, secondaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WordForm from './../components/WordForm'
 
+import { connect } from 'react-redux'
+import { addTopic } from '../actions'
+
 
 class OtherCard extends Component {
     state = {
@@ -53,8 +56,27 @@ class OtherCard extends Component {
         return <WordForm item={data.item} />
     }
 
+    addCard = () => {
+        let topicExist = this.props.box.filter(item => item.dateUserAuth == this.props.item.date
+            && item.userUid == this.props.item.userUid)
+        if (topicExist.length !== 0) {
+            return Alert.alert('Topic added!')
+        }
+        this.props.addTopic({
+            language: this.props.item.language,
+            title: this.props.item.title,
+            words: this.props.item.words,
+            userUid: this.props.item.userUid,
+            dateUserAuth: this.props.item.date
+        })
+        Alert.alert('Add topic completed')
+    }
+
     renderAddButton = () => (
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+            style={styles.addButton}
+            onPress={this.addCard}
+        >
             <Text style={styles.textButton}>Add</Text>
             <Icon name="plus" size={30} color={'white'} />
         </TouchableOpacity>
@@ -88,6 +110,8 @@ class OtherCard extends Component {
             // this.props.navigation.getParam("onOffMyLike")(this.state.isLike)
         }
     }
+
+
 
 
     render() {
@@ -158,4 +182,6 @@ const styles = StyleSheet.create({
     }
 })
 
-export default OtherCard;
+
+const mapStateToProps = ({ box }) => ({ box })
+export default connect(mapStateToProps, { addTopic })(OtherCard);

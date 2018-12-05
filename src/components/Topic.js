@@ -15,14 +15,14 @@ class Topic extends Component {
       <View>
         <TouchableOpacity
           style={styles.container}
-          onPress={() => this.props.navigation.navigate('Learn', {
+          onPress={() => this.props.navigation.push('Learn', {
             topic: this.props.item,
           })}
         >
           <View style={styles.header}>
             <Text style={styles.language}>{this.props.item.language}</Text>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('OwnCard', {
+              onPress={() => this.props.navigation.push('OwnCard', {
                 topic: this.props.item
               })}
             >
@@ -39,7 +39,7 @@ class Topic extends Component {
           </View>
           <View style={styles.flexRow}>
             <Icon style={{ marginEnd: 5, }} name="graduation-cap" size={17} />
-            <Text style={{ width: 25 }}>{this.props.item.learn}</Text>
+            <Text style={{ width: 25 }}>{this.props.item.words.filter(item => item.status == true).length}</Text>
           </View>
         </View>
       </View>

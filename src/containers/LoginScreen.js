@@ -131,7 +131,7 @@ class LoginScreen extends Component {
         </View>
     )
     renderError = () => (
-        <Text style={{ color: primaryColorCore, height: 15 }} >{this.state.err}</Text>
+        <Text style={{ color: primaryColorCore, height: 15, marginTop: 14 }} >{this.state.err}</Text>
     )
     render() {
         return (

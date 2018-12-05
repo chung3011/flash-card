@@ -6,57 +6,34 @@ import {
 import { primaryColorCore } from '../style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import firebase from 'react-native-firebase';
+import { connect } from 'react-redux'
+import { addTopic } from '../actions'
 
 class TopicDiscovery extends Component {
     state = {
-        myLike: [],
-    }
-
-    componentDidMount() {
-        this.loadData()
-    }
-
-    loadData() {
-        firebase.database().ref(`/users`)
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .on('value', res => {
-                this.setState({ box: res._value != null ? res._value : [] })
-            })
     }
 
     addCard = () => {
-        let topicExist = this.state.box.filter(item => item.dateUserAuth == this.props.item.date
+        let topicExist = this.props.box.filter(item => item.dateUserAuth == this.props.item.date
             && item.userUid == this.props.item.userUid)
         if (topicExist.length !== 0) {
             return Alert.alert('Topic added!')
         }
-        this.state.box.unshift({
+        this.props.addTopic({
             language: this.props.item.language,
-            learn: 0,
-            point: 0,
-            date: Date.now(),
             title: this.props.item.title,
-            dateUserAuth: this.props.item.date,
+            words: this.props.item.words,
             userUid: this.props.item.userUid,
-            words: this.props.item.words
+            dateUserAuth: this.props.item.date
         })
-        firebase.database().ref('/users')
-            .child(firebase.auth().currentUser.uid)
-            .child('box')
-            .set(this.state.box)
         Alert.alert('Add topic completed')
     }
 
-    // handleUpdateMyLike = (myLikeValue) => {
-    //     this.setState({ myLike: myLikeValue });
-    // }
 
     _onPressOwnCard = () => {
         this.props.navigation.navigate('OtherCard', {
             topic: this.props.item,
         })
-        // this.props.onReloadBox()
     }
 
 
@@ -85,7 +62,7 @@ class TopicDiscovery extends Component {
                         <Text style={{ width: 25 }}>
                             {this.props.item.like == null
                                 ? 0
-                                : this.props.item.like.length + this.state.myLike.length}
+                                : this.props.item.like.length}
                         </Text>
                     </View>
                 </View>
@@ -129,4 +106,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 })
-export default TopicDiscovery;
+
+const mapStateToProps = ({ box }) => ({ box })
+export default connect(mapStateToProps, { addTopic })(TopicDiscovery);

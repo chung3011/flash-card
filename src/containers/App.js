@@ -137,8 +137,11 @@ const Navigation = createStackNavigator({
         fontSize: 20,
         fontWeight: 'bold',
         color: primaryColorCore
-
       },
+      headerLeft:
+        <TouchableOpacity onPress={() => navigation.navigate('Discovery')}>
+          <Icon style={{ marginStart: 10, color: primaryColorCore }} name="arrow-left" size={20} />
+        </TouchableOpacity>
     })
   },
 })

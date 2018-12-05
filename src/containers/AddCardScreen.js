@@ -56,10 +56,11 @@ class AddCardScreen extends Component {
             language: this.state.language,
             title: this.state.title,
             words: this.props.words,
-            userUid: firebase.auth().currentUser.uid
+            userUid: firebase.auth().currentUser.uid,
+            dateUserAuth: false
         })
         this.props.cleanWord()
-        this.props.navigation.navigate('Topics')
+        this.props.navigation.push('Topics')
     }
 
     renderAddButton = () => (
